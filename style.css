@@ -46,9 +46,64 @@ body {
 }
 
 @media (max-width: 768px) {
+  /* 照片往上拉，讓人臉完整露出 */
   .hero-bg {
-    object-position: center 25%;
+    object-position: center 8%;
     transform: scale(1);
+  }
+
+  /* 手機 overlay：頂部更透明讓人臉呼吸，底部保留深色讓文字清晰 */
+  .hero-overlay {
+    background:
+      linear-gradient(to bottom,
+        rgba(3,0,10,.35)  0%,
+        rgba(3,0,10,.08) 15%,
+        rgba(3,0,10,.04) 40%,
+        rgba(3,0,10,.55) 72%,
+        rgba(3,0,10,.96) 100%
+      );
+  }
+
+  /* 星空底色配合藍紫光暈 */
+  .hero-overlay::after {
+    background: radial-gradient(ellipse at 50% 95%, rgba(40,10,110,.6) 0%, rgba(20,5,70,.25) 40%, transparent 65%);
+  }
+
+  /* NMIXX 字體縮小避免佔太多空間 */
+  .hero h1 {
+    font-size: clamp(48px, 18vw, 72px);
+    letter-spacing: 8px;
+    filter: drop-shadow(0 0 20px rgba(184,110,245,.4));
+  }
+
+  .hero h2 {
+    font-size: clamp(7px, 2.2vw, 11px);
+    letter-spacing: 5px;
+  }
+
+  .hero-content {
+    padding: 0 16px 32px;
+  }
+
+  .location {
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 14px;
+  }
+
+  .dates { gap: 8px; margin-bottom: 10px; }
+
+  .date-badge {
+    font-size: 13px;
+    padding: 6px 18px;
+  }
+
+  .venue { font-size: 10px; margin-bottom: 20px; }
+
+  .hero-cta {
+    font-size: 11px;
+    padding: 8px 22px;
+    letter-spacing: 2px;
   }
 }
 
