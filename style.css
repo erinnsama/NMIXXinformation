@@ -42,8 +42,14 @@ body {
   object-fit: cover;
   object-position: center 38%;
   z-index: 0;
-  /* subtle zoom to fill any white edges */
   transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    object-position: center 25%;
+    transform: scale(1);
+  }
 }
 
 /* 4-layer overlay: top fade + vignette sides + bottom ramp + blue glow */
