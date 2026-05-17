@@ -6,12 +6,6 @@ async function loadPosts() {
     const res = await fetch('data/posts.json');
     const data = await res.json();
 
-    const el = document.getElementById('last-update');
-    if (data.last_updated) {
-      const d = new Date(data.last_updated);
-      el.textContent = `最後更新：${d.toLocaleString('zh-TW')}`;
-    }
-
     renderPosts(data.posts || []);
   } catch {
     grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
@@ -67,29 +61,6 @@ function safe(str) {
   const d = document.createElement('div');
   d.appendChild(document.createTextNode(str));
   return d.innerHTML;
-}
-
-// ── Update trigger ──
-
-async function triggerUpdate() {
-  const btn = document.getElementById('update-btn');
-  btn.classList.add('loading');
-  btn.disabled = true;
-
-  try {
-    const res = await fetch('/api/trigger', { method: 'POST' });
-    const data = await res.json();
-    if (data.success) {
-      alert('✅ 更新已觸發！\n\n爬蟲約需 2–3 分鐘執行完畢，\n請稍後重新整理頁面查看最新資料。');
-    } else {
-      alert('❌ 觸發失敗：' + (data.error || '請稍後再試'));
-    }
-  } catch {
-    alert('❌ 連線錯誤，請稍後再試。');
-  } finally {
-    btn.classList.remove('loading');
-    btn.disabled = false;
-  }
 }
 
 // ── Map (Leaflet + OpenStreetMap dark tiles) ──

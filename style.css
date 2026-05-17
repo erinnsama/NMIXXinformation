@@ -46,9 +46,9 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 上下分離：標題頂部、日期底部，人像在中間完整露出 */
+  /* 日期貼底；wordmark 絕對定位在頂部星空區 */
   .hero {
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
   .hero-bg {
@@ -56,13 +56,12 @@ body {
     transform: scale(1);
   }
 
-  /* 頂部幾乎全透明，讓標題浮在星空上 */
   .hero-overlay {
     background:
       linear-gradient(to bottom,
-        rgba(3,0,10,.55)  0%,
-        rgba(3,0,10,.15) 12%,
-        rgba(3,0,10,.02) 30%,
+        rgba(3,0,10,.65)  0%,
+        rgba(3,0,10,.20) 18%,
+        rgba(3,0,10,.02) 35%,
         rgba(3,0,10,.02) 60%,
         rgba(3,0,10,.60) 75%,
         rgba(3,0,10,.97) 100%
@@ -73,13 +72,18 @@ body {
     background: radial-gradient(ellipse at 50% 95%, rgba(40,10,110,.6) 0%, rgba(20,5,70,.25) 40%, transparent 65%);
   }
 
-  /* 標題區：頂部留一點空間放在星空裡 */
+  /* 固定在頂部星空區，不佔 flex 空間 */
   .hero-wordmark {
-    padding: 48px 20px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 44px 20px 0;
+    z-index: 3;
   }
 
   .hero h1 {
-    font-size: clamp(44px, 15vw, 64px);
+    font-size: clamp(28px, 9vw, 38px);
     letter-spacing: 8px;
     filter: drop-shadow(0 0 18px rgba(184,110,245,.45));
   }
@@ -332,46 +336,6 @@ body {
 
 .section-desc { color: var(--muted); margin-bottom: 24px; font-size: 14px; }
 
-/* ── UPDATE BAR ── */
-.update-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
-  padding: 12px 18px;
-  background: var(--bg-card);
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-
-.last-update { color: var(--muted); font-size: 13px; }
-
-.update-btn {
-  background: var(--gradient);
-  color: #fff;
-  border: none;
-  padding: 8px 22px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: opacity .2s, transform .1s;
-  letter-spacing: .5px;
-}
-
-.update-btn:hover { opacity: .88; }
-.update-btn:active { transform: scale(.97); }
-.update-btn:disabled { opacity: .5; cursor: not-allowed; }
-
-.update-icon { display: inline-block; font-size: 16px; }
-.update-btn.loading .update-icon { animation: spin 1s linear infinite; }
-
-@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── POSTS GRID ── */
 .posts-grid { display: flex; flex-direction: column; gap: 0; }
@@ -869,5 +833,4 @@ body {
   .form-row { grid-template-columns: 1fr; }
   .transport-header { flex-direction: column; align-items: flex-start; }
   .route-display { font-size: 14px; }
-  .update-bar { flex-direction: column; align-items: flex-start; }
 }
