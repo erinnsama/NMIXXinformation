@@ -46,41 +46,50 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 照片往上拉，讓人臉完整露出 */
+  /* 上下分離：標題頂部、日期底部，人像在中間完整露出 */
+  .hero {
+    justify-content: space-between;
+  }
+
   .hero-bg {
     object-position: center 0%;
     transform: scale(1);
   }
 
-  /* 手機 overlay：頂部幾乎透明讓人臉完整顯示 */
+  /* 頂部幾乎全透明，讓標題浮在星空上 */
   .hero-overlay {
     background:
       linear-gradient(to bottom,
-        rgba(3,0,10,.10)  0%,
-        rgba(3,0,10,.04) 10%,
-        rgba(3,0,10,.02) 35%,
-        rgba(3,0,10,.50) 68%,
-        rgba(3,0,10,.96) 100%
+        rgba(3,0,10,.55)  0%,
+        rgba(3,0,10,.15) 12%,
+        rgba(3,0,10,.02) 30%,
+        rgba(3,0,10,.02) 60%,
+        rgba(3,0,10,.60) 75%,
+        rgba(3,0,10,.97) 100%
       );
   }
 
-  /* 星空底色配合藍紫光暈 */
   .hero-overlay::after {
     background: radial-gradient(ellipse at 50% 95%, rgba(40,10,110,.6) 0%, rgba(20,5,70,.25) 40%, transparent 65%);
   }
 
-  /* NMIXX 字體縮小避免佔太多空間 */
+  /* 標題區：頂部留一點空間放在星空裡 */
+  .hero-wordmark {
+    padding: 48px 20px 0;
+  }
+
   .hero h1 {
-    font-size: clamp(48px, 18vw, 72px);
+    font-size: clamp(44px, 15vw, 64px);
     letter-spacing: 8px;
-    filter: drop-shadow(0 0 20px rgba(184,110,245,.4));
+    filter: drop-shadow(0 0 18px rgba(184,110,245,.45));
   }
 
   .hero h2 {
-    font-size: clamp(7px, 2.2vw, 11px);
+    font-size: clamp(7px, 2vw, 10px);
     letter-spacing: 5px;
   }
 
+  /* 日期區：貼底 */
   .hero-content {
     padding: 0 16px 32px;
   }
@@ -196,6 +205,14 @@ body {
   letter-spacing: 7px;
   color: rgba(200,175,235,.65);
   margin-top: 10px;
+}
+
+.hero-wordmark {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  width: 100%;
+  padding: 0 20px;
 }
 
 .hero-content {
