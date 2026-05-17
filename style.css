@@ -75,7 +75,7 @@ body {
   /* 固定在頂部星空區，不佔 flex 空間 */
   .hero-wordmark {
     position: absolute;
-    top: 5vh;
+    top: 2vh;
     left: 0;
     right: 0;
     padding: 0 20px;
