@@ -52,14 +52,14 @@ body {
     transform: scale(1);
   }
 
-  /* 手機 overlay：頂部更透明讓人臉呼吸，底部保留深色讓文字清晰 */
+  /* 手機 overlay：頂部幾乎透明讓人臉完整顯示 */
   .hero-overlay {
     background:
       linear-gradient(to bottom,
-        rgba(3,0,10,.35)  0%,
-        rgba(3,0,10,.08) 15%,
-        rgba(3,0,10,.04) 40%,
-        rgba(3,0,10,.55) 72%,
+        rgba(3,0,10,.10)  0%,
+        rgba(3,0,10,.04) 10%,
+        rgba(3,0,10,.02) 35%,
+        rgba(3,0,10,.50) 68%,
         rgba(3,0,10,.96) 100%
       );
   }
