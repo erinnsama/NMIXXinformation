@@ -438,20 +438,83 @@ body {
 .maps-btn:hover { opacity: .88; }
 
 .transport-tips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.tip {
+.transport-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 7px 13px;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.transport-card-head {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--purple);
+  margin-bottom: 2px;
+}
+
+.transport-item { display: flex; flex-direction: column; gap: 2px; }
+.transport-item + .transport-item { padding-top: 6px; border-top: 1px solid var(--border); }
+
+.transport-route {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.transport-detail {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── SEATING CHART ── */
+.seating-wrap { position: relative; margin-bottom: 8px; }
+
+.seating-img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: block;
+}
+
+.seating-source {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 5px;
+}
+
+.seating-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   color: var(--muted);
-  box-shadow: var(--shadow);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 
 .map-wrap { margin-bottom: 20px; }
