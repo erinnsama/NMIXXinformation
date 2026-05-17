@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NMIXX ZERO FRONTIER in 高雄 應援資訊</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <img class="hero-bg" src="assets/hero.png" alt="NMIXX">
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <div class="tour-badge">1ST WORLD TOUR</div>
+      <h1>NMIXX</h1>
+      <h2>EPISODE 1 : ZERO FRONTIER</h2>
+      <div class="location">In Kaohsiung</div>
+      <div class="dates">
+        <span class="date-badge">7 / 11 (六)</span>
+        <span class="date-badge">7 / 12 (日)</span>
+      </div>
+      <div class="venue">高雄巨蛋</div>
+      <a href="#fan-support" class="hero-cta">查看應援資訊 ↓</a>
+    </div>
+  </header>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="#fan-support">應援資訊</a>
+    <a href="#transport">交通指南</a>
+    <a href="#union">聯合應援團隊</a>
+    <a href="#owner-support">版主應援</a>
+    <a href="#notes">注意事項</a>
+    <a href="#submit">提交資訊</a>
+  </nav>
+
+  <!-- Fan Support Posts -->
+  <section class="section" id="fan-support">
+    <div class="container">
+      <h2 class="section-title">📣 高雄場應援資訊</h2>
+      <div class="update-bar">
+        <span class="last-update" id="last-update">尚未更新</span>
+        <button class="update-btn" id="update-btn" onclick="triggerUpdate()">
+          <span class="update-icon">↻</span> 更新資料
+        </button>
+      </div>
+      <div class="posts-grid" id="posts-grid">
+        <div class="loading">載入中⋯</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transport Map -->
+  <section class="section section-alt" id="transport">
+    <div class="container">
+      <h2 class="section-title">🚄 交通指南</h2>
+      <div class="transport-header">
+        <div class="route-display">
+          <span class="route-node">高鐵左營站</span>
+          <span class="route-arrow">→</span>
+          <span class="route-node">高雄巨蛋</span>
+        </div>
+        <a href="https://www.google.com/maps/dir/台灣高鐵左營站/高雄巨蛋" target="_blank" class="maps-btn">
+          在 Google Maps 開啟路線 ↗
+        </a>
+      </div>
+      <div class="transport-tips">
+        <div class="tip">🚇 搭捷運：左營站 → 凹子底站（橘線 O8，約 10 分鐘）</div>
+        <div class="tip">🚶 步行：約 25–30 分鐘</div>
+        <div class="tip">🚕 計程車 / Uber：約 10–15 分鐘</div>
+        <div class="tip">🚌 公車：299、301 等路線可抵達</div>
+      </div>
+      <div id="map"></div>
+    </div>
+  </section>
+
+  <!-- 臺灣聯合應援團隊 -->
+  <section class="section" id="union">
+    <div class="container">
+      <div class="union-header">
+        <div>
+          <div class="union-eyebrow">NMIXX &amp; NSWER in Taiwan</div>
+          <h2 class="union-title">臺灣聯合應援團隊<br>資訊專區</h2>
+        </div>
+      </div>
+      <!-- TODO: 填入聯合應援團隊資訊 -->
+      <div class="support-placeholder">
+        <div class="placeholder-icon">✦</div>
+        <p>聯合應援團隊資訊即將公開，請持續關注！</p>
+      </div>
+      <!--
+      填好後把上方 placeholder 刪掉，改用這個格式：
+      <div class="union-grid">
+        <div class="union-card"> ... </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- 版主應援發放 -->
+  <section class="section section-alt owner-section" id="owner-support">
+    <div class="container">
+      <div class="owner-label">版主應援發放資訊</div>
+      <!-- TODO: 填入版主應援資訊 -->
+      <div class="owner-placeholder">
+        <span class="owner-placeholder-dot"></span>
+        <span class="owner-placeholder-dot"></span>
+        <span class="owner-placeholder-dot"></span>
+        <p>即將公開</p>
+      </div>
+      <!--
+      填好後刪除上方 placeholder，改用這個格式：
+      <div class="owner-card">
+        <div class="owner-card-badge">限量發放</div>
+        <h3 class="owner-card-title">應援活動名稱</h3>
+        <div class="owner-card-body">
+          <p>📅 日期：</p>
+          <p>📍 地點：</p>
+          <p>🎁 內容：</p>
+          <p>📩 聯絡：</p>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- Concert Notes -->
+  <section class="section section-alt" id="notes">
+    <div class="container">
+      <h2 class="section-title">📋 演唱會注意事項</h2>
+      <!-- TODO: 填入注意事項 -->
+      <div class="support-placeholder">
+        <div class="placeholder-icon">📌</div>
+        <p>注意事項確認後公布，包含 Dress Code 主題等資訊</p>
+      </div>
+
+      <!-- 範例格式（填好後取消註解）
+      <div class="notes-list">
+        <div class="note-item">
+          <span class="note-icon">👗</span>
+          <div>
+            <strong>Dress Code</strong>
+            <p>本次粉絲自發主題：XXXXXXXXX</p>
+          </div>
+        </div>
+        <div class="note-item">
+          <span class="note-icon">🚫</span>
+          <div>
+            <strong>禁止攜入物品</strong>
+            <p>依高雄巨蛋規定：長條旗、自拍棒等</p>
+          </div>
+        </div>
+      </div>
+      -->
+    </div>
+  </section>
+
+  <!-- Community Submission -->
+  <section class="section" id="submit">
+    <div class="container">
+      <h2 class="section-title">📨 提交應援資訊</h2>
+      <p class="section-desc">如果你也有舉辦應援活動，歡迎提交讓更多人知道！</p>
+      <form class="submit-form" id="submit-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>主辦人 / 帳號 <span class="required">*</span></label>
+            <input type="text" name="organizer" placeholder="你的 Threads / IG 帳號" required>
+          </div>
+          <div class="form-group">
+            <label>活動日期 <span class="required">*</span></label>
+            <input type="text" name="event_date" placeholder="例：7/11 全場 / 7/12 入場前" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>應援活動名稱 <span class="required">*</span></label>
+          <input type="text" name="event_name" placeholder="例：NMIXX 高雄場海報應援" required>
+        </div>
+        <div class="form-group">
+          <label>活動地點</label>
+          <input type="text" name="location" placeholder="例：高雄巨蛋 A 入口前">
+        </div>
+        <div class="form-group">
+          <label>詳細說明</label>
+          <textarea name="description" placeholder="應援內容、領取方式、時間等⋯" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>聯絡方式 / 原文連結</label>
+          <input type="text" name="contact" placeholder="Threads 貼文連結或聯絡帳號">
+        </div>
+        <button type="submit" class="submit-btn">提交應援資訊</button>
+        <div class="form-success" id="form-success">✅ 已送出！感謝你的提交</div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>本站為粉絲自製應援資訊整合站，與 NMIXX 官方及 JYP Entertainment 無關</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

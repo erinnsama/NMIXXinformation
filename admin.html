@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>後台管理 — NMIXX 應援資訊</title>
+  <style>
+    :root {
+      --bg: #07070f;
+      --card: #10101e;
+      --border: #22223a;
+      --purple: #b86ef5;
+      --pink: #f06bf0;
+      --red: #f05050;
+      --text: #eeeeff;
+      --muted: #8888aa;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── lock screen ── */
+    #lock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .lock-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+    .lock-box h2 { font-size: 18px; margin-bottom: 6px; }
+    .lock-box p  { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+    .lock-box input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-size: 15px;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-bottom: 14px;
+    }
+    .lock-box input:focus { outline: none; border-color: var(--purple); }
+    .lock-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      border: none;
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .lock-error { color: var(--red); font-size: 12px; margin-top: 10px; display: none; }
+
+    /* ── admin panel ── */
+    #panel { display: none; padding: 32px 20px; max-width: 900px; margin: 0 auto; }
+
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .admin-header h1 { font-size: 20px; }
+    .admin-header span { font-size: 12px; color: var(--muted); }
+
+    .back-link {
+      font-size: 13px;
+      color: var(--purple);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      min-width: 120px;
+    }
+    .stat-num { font-size: 28px; font-weight: 800; color: var(--purple); }
+    .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 1px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: 24px 0 12px;
+    }
+
+    .post-row {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      transition: border-color .2s;
+    }
+    .post-row:hover { border-color: #333355; }
+
+    .post-info { flex: 1; min-width: 0; }
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: rgba(184,110,245,.12);
+      color: var(--purple);
+    }
+    .tag.community { background: rgba(110,232,245,.1); color: #6ee8f5; }
+    .username { font-weight: 700; font-size: 14px; }
+    .post-date { font-size: 11px; color: var(--muted); }
+
+    .post-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-line;
+      word-break: break-word;
+      max-height: 72px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .post-extra {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #5555aa;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .del-btn {
+      background: rgba(240,80,80,.1);
+      border: 1px solid rgba(240,80,80,.3);
+      color: var(--red);
+      border-radius: 7px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all .2s;
+      align-self: center;
+    }
+    .del-btn:hover { background: rgba(240,80,80,.22); border-color: var(--red); }
+
+    .empty { text-align: center; color: var(--muted); padding: 40px; font-size: 14px; }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a2e;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- Lock screen -->
+<div id="lock">
+  <div class="lock-box">
+    <h2>🔒 後台管理</h2>
+    <p>NMIXX 高雄場應援資訊站</p>
+    <input type="password" id="pw-input" placeholder="輸入密碼" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="lock-btn" onclick="unlock()">進入</button>
+    <div class="lock-error" id="pw-error">密碼錯誤</div>
+  </div>
+</div>
+
+<!-- Admin panel -->
+<div id="panel">
+  <div class="admin-header">
+    <div>
+      <h1>⚙️ 後台管理</h1>
+      <span id="last-update-label">—</span>
+    </div>
+    <a href="/" class="back-link">← 回到首頁</a>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" id="count-all">0</div>
+      <div class="stat-label">全部貼文</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="count-threads">0</div>
+      <div class="stat-label">Threads 爬蟲</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="count-community">0</div>
+      <div class="stat-label">手動更新</div>
+    </div>
+  </div>
+
+  <div class="section-label">所有應援資訊</div>
+  <div id="post-list"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const ADMIN_PW = 'nmixx2026';  // ← 改這裡設定你的密碼
+
+  function unlock() {
+    const val = document.getElementById('pw-input').value;
+    if (val === ADMIN_PW) {
+      document.getElementById('lock').style.display = 'none';
+      document.getElementById('panel').style.display = 'block';
+      loadPosts();
+    } else {
+      const err = document.getElementById('pw-error');
+      err.style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      setTimeout(() => err.style.display = 'none', 2000);
+    }
+  }
+
+  let allPosts = [];
+
+  async function loadPosts() {
+    const res = await fetch('/data/posts.json?t=' + Date.now());
+    const data = await res.json();
+    allPosts = data.posts || [];
+
+    if (data.last_updated) {
+      document.getElementById('last-update-label').textContent =
+        '最後更新：' + new Date(data.last_updated).toLocaleString('zh-TW');
+    }
+
+    document.getElementById('count-all').textContent = allPosts.length;
+    document.getElementById('count-threads').textContent = allPosts.filter(p => p.source === 'threads').length;
+    document.getElementById('count-community').textContent = allPosts.filter(p => p.source === 'community').length;
+
+    renderList();
+  }
+
+  function renderList() {
+    const list = document.getElementById('post-list');
+    if (!allPosts.length) {
+      list.innerHTML = '<div class="empty">目前沒有任何資料</div>';
+      return;
+    }
+    list.innerHTML = allPosts.map((p, i) => `
+      <div class="post-row" id="row-${i}">
+        <div class="post-info">
+          <div class="post-meta">
+            <span class="tag ${p.source === 'community' ? 'community' : ''}">
+              ${p.source === 'community' ? '✍️ 手動更新' : '🔍 Threads'}
+            </span>
+            <span class="username">@${esc(p.username || '—')}</span>
+            <span class="post-date">${esc(p.date || '')}</span>
+          </div>
+          <div class="post-text">${esc(p.text || '').replace(/\n/g, '<br>')}</div>
+          <div class="post-extra">
+            ${p.event_date ? `<span>📅 ${esc(p.event_date)}</span>` : ''}
+            ${p.location    ? `<span>📍 ${esc(p.location)}</span>`   : ''}
+            ${p.url         ? `<a href="${p.url}" target="_blank" style="color:#6e8ef5">🔗 原文</a>` : ''}
+          </div>
+        </div>
+        <button class="del-btn" onclick="deletePost(${i})">刪除</button>
+      </div>
+    `).join('');
+  }
+
+  async function deletePost(i) {
+    const post = allPosts[i];
+    if (!confirm(`確定刪除「${post.event_name || post.username}」這筆資料？`)) return;
+
+    const res = await fetch('/api/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: post.id }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      allPosts.splice(i, 1);
+      document.getElementById('count-all').textContent = allPosts.length;
+      document.getElementById('count-threads').textContent = allPosts.filter(p => p.source === 'threads').length;
+      document.getElementById('count-community').textContent = allPosts.filter(p => p.source === 'community').length;
+      renderList();
+      showToast('✅ 已刪除');
+    } else {
+      showToast('❌ 刪除失敗：' + (data.error || ''));
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  function esc(s) {
+    const d = document.createElement('div');
+    d.appendChild(document.createTextNode(String(s)));
+    return d.innerHTML;
+  }
+</script>
+</body>
+</html>

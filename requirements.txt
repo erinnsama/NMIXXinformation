@@ -1,0 +1,2 @@
+# Vercel serverless functions (api/) dependencies
+# urllib is built-in, nothing extra needed for trigger.py
