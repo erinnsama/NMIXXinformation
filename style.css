@@ -525,29 +525,6 @@ body {
 }
 
 /* ── UNION POSTS ── */
-.union-account {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.union-account-handle {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--purple);
-}
-
-.union-account-link {
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  border: 1px solid var(--border);
-  padding: 3px 10px;
-  border-radius: 20px;
-  transition: color .2s, border-color .2s;
-}
-.union-account-link:hover { color: var(--purple); border-color: rgba(124,58,237,.4); }
 
 .union-posts {
   display: flex;
@@ -579,6 +556,14 @@ body {
   color: var(--text);
   font-weight: 500;
   min-width: 0;
+}
+
+.union-post-handle {
+  font-size: 11px;
+  color: var(--purple);
+  white-space: nowrap;
+  flex-shrink: 0;
+  opacity: .8;
 }
 
 .union-post-date {
