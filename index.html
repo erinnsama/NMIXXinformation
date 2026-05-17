@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NMIXX ZERO FRONTIER in 高雄 應援資訊</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
 
@@ -68,13 +67,46 @@
           在 Google Maps 開啟路線 ↗
         </a>
       </div>
-      <div class="transport-tips">
-        <div class="tip">🚇 搭捷運：左營站 → 凹子底站（橘線 O8，約 10 分鐘）</div>
-        <div class="tip">🚶 步行：約 25–30 分鐘</div>
-        <div class="tip">🚕 計程車 / Uber：約 10–15 分鐘</div>
-        <div class="tip">🚌 公車：299、301 等路線可抵達</div>
+      <div class="transport-tips" id="transport-tips">
+        <!-- 待確認後填入正確資訊 -->
       </div>
-      <div id="map"></div>
+
+      <div class="map-wrap">
+        <iframe
+          src="https://maps.google.com/maps?saddr=高鐵左營站,高雄市&daddr=高雄巨蛋,高雄市左營區&output=embed&hl=zh-TW"
+          class="google-map"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <div class="landmark-grid">
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=高鐵左營站" target="_blank" rel="noopener">
+          <div class="landmark-icon">🚄</div>
+          <div class="landmark-name">高鐵左營站</div>
+          <div class="landmark-desc">出發點</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=高雄巨蛋" target="_blank" rel="noopener">
+          <div class="landmark-icon">🎵</div>
+          <div class="landmark-name">高雄巨蛋</div>
+          <div class="landmark-desc">演唱會場地</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=漢神巨蛋+高雄左營" target="_blank" rel="noopener">
+          <div class="landmark-icon">🛍️</div>
+          <div class="landmark-name">漢神巨蛋</div>
+          <div class="landmark-desc">購物中心・場館旁</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=瑞豐夜市+高雄" target="_blank" rel="noopener">
+          <div class="landmark-icon">🌙</div>
+          <div class="landmark-name">瑞豐夜市</div>
+          <div class="landmark-desc">週五六日開市・步行可達</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -200,7 +232,6 @@
     <p>本站為粉絲自製應援資訊整合站，與 NMIXX 官方及 JYP Entertainment 無關，資訊可能有誤，有誤的話可以私訊我的 Threads <a href="https://www.threads.net/@nsweririka" target="_blank" rel="noopener" style="color:var(--purple)">@nsweririka</a>。</p>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

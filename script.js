@@ -69,39 +69,10 @@ function safe(str) {
   return d.innerHTML;
 }
 
-// ── Map (Leaflet + OpenStreetMap dark tiles) ──
-
-function initMap() {
-  const map = L.map('map', { zoomControl: true }).setView([22.679, 120.290], 14);
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19,
-  }).addTo(map);
-
-  const makeIcon = (label, color) => L.divIcon({
-    html: `<div style="background:${color};color:#fff;padding:5px 11px;border-radius:7px;font-size:12px;font-weight:700;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.5)">${label}</div>`,
-    iconAnchor: [70, 14],
-    className: '',
-  });
-
-  L.marker([22.6828, 120.2768], { icon: makeIcon('🚄 高鐵左營站', '#7c3aed') }).addTo(map);
-  L.marker([22.6767, 120.3031], { icon: makeIcon('🎵 高雄巨蛋', '#c026d3') }).addTo(map);
-
-  L.polyline([[22.6828, 120.2768], [22.6767, 120.3031]], {
-    color: '#b86ef5',
-    weight: 3,
-    dashArray: '8 8',
-    opacity: .8,
-  }).addTo(map);
-}
-
-// ── Submission form (Web3Forms) ──
+// ── Submission form ──
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPosts();
-  initMap();
 
   const form = document.getElementById('submit-form');
   const successMsg = document.getElementById('form-success');
