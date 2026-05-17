@@ -27,14 +27,15 @@ function renderPosts(posts) {
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
-    const venueLabel = post.venue_type === 'offsite' ? '🏪非現場(有指定地點)' : '🎤演唱會現場';
+    const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
+    const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
+    const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
     return `
       <div class="post-card">
         <div class="post-card-tags">
-          <span class="post-tag ${isCommunity ? 'community' : ''}">
-            ${isCommunity ? '✍️ 手動更新' : '🔍 Threads'}
-          </span>
+          <span class="post-tag ${isCommunity ? 'community' : ''}">${isCommunity ? '✍️ 手動更新' : '🔍 Threads'}</span>
           <span class="post-tag venue-tag">${venueLabel}</span>
+          ${eventDate}
         </div>
         <div class="post-header">
           <div class="post-avatar">${initial}</div>
@@ -43,7 +44,10 @@ function renderPosts(posts) {
             <div class="post-date">${safe(post.date || '')}</div>
           </div>
         </div>
-        <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
+        ${location}
+        <div class="post-text-wrap">
+          <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
+        </div>
         ${post.url ? `<a href="${post.url}" target="_blank" rel="noopener" class="post-link">查看原文 →</a>` : ''}
       </div>`;
   };
