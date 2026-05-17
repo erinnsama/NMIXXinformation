@@ -26,7 +26,10 @@ function renderPosts(posts) {
     return;
   }
 
-  grid.innerHTML = posts.map(post => {
+  const venue   = posts.filter(p => p.venue_type === 'venue'   || (!p.venue_type && p.source === 'threads'));
+  const offsite = posts.filter(p => p.venue_type === 'offsite');
+
+  const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
     return `
@@ -44,7 +47,20 @@ function renderPosts(posts) {
         <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
         ${post.url ? `<a href="${post.url}" target="_blank" rel="noopener" class="post-link">查看原文 →</a>` : ''}
       </div>`;
-  }).join('');
+  };
+
+  let html = '';
+
+  if (venue.length) {
+    html += `<div class="posts-category-label">🎤 演唱會線下應援</div>
+             <div class="posts-grid-inner">${venue.map(cardHtml).join('')}</div>`;
+  }
+  if (offsite.length) {
+    html += `<div class="posts-category-label ${venue.length ? 'mt' : ''}">🏪 非演唱會現場應援</div>
+             <div class="posts-grid-inner">${offsite.map(cardHtml).join('')}</div>`;
+  }
+
+  grid.innerHTML = html;
 }
 
 function safe(str) {

@@ -36,7 +36,6 @@
     <a href="#fan-support">應援資訊</a>
     <a href="#transport">交通指南</a>
     <a href="#union">聯合應援團隊</a>
-    <a href="#owner-support">版主應援</a>
     <a href="#notes">注意事項</a>
     <a href="#submit">提交資訊</a>
   </nav>
@@ -104,33 +103,6 @@
     </div>
   </section>
 
-  <!-- 版主應援發放 -->
-  <section class="section section-alt owner-section" id="owner-support">
-    <div class="container">
-      <div class="owner-label">版主應援發放資訊</div>
-      <!-- TODO: 填入版主應援資訊 -->
-      <div class="owner-placeholder">
-        <span class="owner-placeholder-dot"></span>
-        <span class="owner-placeholder-dot"></span>
-        <span class="owner-placeholder-dot"></span>
-        <p>即將公開</p>
-      </div>
-      <!--
-      填好後刪除上方 placeholder，改用這個格式：
-      <div class="owner-card">
-        <div class="owner-card-badge">限量發放</div>
-        <h3 class="owner-card-title">應援活動名稱</h3>
-        <div class="owner-card-body">
-          <p>📅 日期：</p>
-          <p>📍 地點：</p>
-          <p>🎁 內容：</p>
-          <p>📩 聯絡：</p>
-        </div>
-      </div>
-      -->
-    </div>
-  </section>
-
   <!-- Concert Notes -->
   <section class="section section-alt" id="notes">
     <div class="container">
@@ -181,6 +153,19 @@
         <div class="form-group">
           <label>應援活動名稱 <span class="required">*</span></label>
           <input type="text" name="event_name" placeholder="例：NMIXX 高雄場海報應援" required>
+        </div>
+        <div class="form-group">
+          <label>活動類型 <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="venue_type" value="venue" required>
+              <span>🎤 演唱會線下應援（現場附近發放）</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="venue_type" value="offsite">
+              <span>🏪 非演唱會現場應援（店舖、展覽等）</span>
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <label>活動地點</label>

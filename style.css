@@ -357,7 +357,28 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── POSTS GRID ── */
-.posts-grid {
+.posts-grid { display: flex; flex-direction: column; gap: 0; }
+
+.posts-category-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.posts-category-label.mt { margin-top: 28px; }
+.posts-category-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.posts-grid-inner {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 14px;
@@ -763,6 +784,33 @@ body {
 }
 
 .form-group textarea { resize: vertical; }
+
+/* radio group */
+.radio-group { display: flex; flex-direction: column; gap: 10px; }
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color .2s;
+  font-size: 14px;
+}
+
+.radio-option:has(input:checked) {
+  border-color: var(--purple);
+  background: rgba(184,110,245,.06);
+}
+
+.radio-option input[type="radio"] {
+  width: auto;
+  accent-color: var(--purple);
+  flex-shrink: 0;
+}
 
 .submit-btn {
   background: var(--gradient);
