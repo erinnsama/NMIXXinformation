@@ -27,7 +27,7 @@ function renderPosts(posts) {
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
-    const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 現場';
+    const venueLabel = post.venue_type === 'offsite' ? '🏪非現場(有指定地點)' : '🎤演唱會現場';
     return `
       <div class="post-card">
         <div class="post-card-tags">
@@ -56,9 +56,9 @@ function renderPosts(posts) {
 
   let first = true;
   let html = '';
-  if (both.length) { html += section('📅 7/11 + 7/12 都有應援', both, false); first = false; }
-  if (day1.length) { html += section('📅 單純 7/11（六）應援', day1, !first); first = false; }
-  if (day2.length) { html += section('📅 單純 7/12（日）應援', day2, !first); }
+  if (both.length) { html += section('雙日應援區', both, false); first = false; }
+  if (day1.length) { html += section('7/11 周六場應援區', day1, !first); first = false; }
+  if (day2.length) { html += section('7/12 周日場應援區', day2, !first); }
 
   grid.innerHTML = html;
 }
