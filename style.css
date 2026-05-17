@@ -48,7 +48,7 @@ body {
 @media (max-width: 768px) {
   /* 照片往上拉，讓人臉完整露出 */
   .hero-bg {
-    object-position: center 8%;
+    object-position: center 0%;
     transform: scale(1);
   }
 
