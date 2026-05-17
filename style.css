@@ -378,6 +378,8 @@ body {
 
 .post-card:hover { border-color: var(--purple); }
 
+.post-card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
 .post-tag {
   display: inline-flex;
   align-items: center;

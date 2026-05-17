@@ -1,6 +1,5 @@
 """
-Vercel serverless — delete a post by id via GitHub API commit.
-target: "posts" (default) or "pending"
+Vercel serverless — approve a pending post: move from pending.json to posts.json
 """
 
 from http.server import BaseHTTPRequestHandler
@@ -14,6 +13,8 @@ from datetime import datetime, timezone
 GITHUB_PAT   = os.environ.get("GITHUB_PAT", "")
 GITHUB_OWNER = os.environ.get("GITHUB_OWNER", "")
 GITHUB_REPO  = os.environ.get("GITHUB_REPO", "")
+PENDING_PATH = "data/pending.json"
+POSTS_PATH   = "data/posts.json"
 
 
 def _gh_get(path):
@@ -71,27 +72,24 @@ class handler(BaseHTTPRequestHandler):
             self._respond({"success": False, "error": "missing id"})
             return
 
-        target = data.get("target", "posts")
-        if target == "pending":
-            file_path = "data/pending.json"
-            list_key  = "pending"
-            commit_msg = "chore: reject pending fan support post"
-        else:
-            file_path = "data/posts.json"
-            list_key  = "posts"
-            commit_msg = "chore: delete fan support post"
-
         try:
-            file_meta = _gh_get(file_path)
-            existing = json.loads(base64.b64decode(file_meta["content"]))
-            before = len(existing.get(list_key, []))
-            existing[list_key] = [p for p in existing.get(list_key, []) if p.get("id") != post_id]
-            if len(existing[list_key]) == before:
-                self._respond({"success": False, "error": "id not found"})
+            pending_meta = _gh_get(PENDING_PATH)
+            pending_data = json.loads(base64.b64decode(pending_meta["content"]))
+
+            post = next((p for p in pending_data.get("pending", []) if p.get("id") == post_id), None)
+            if not post:
+                self._respond({"success": False, "error": "post not found in pending"})
                 return
-            if target != "pending":
-                existing["last_updated"] = datetime.now(timezone.utc).isoformat()
-            _gh_put(file_path, file_meta["sha"], existing, commit_msg)
+
+            posts_meta = _gh_get(POSTS_PATH)
+            posts_data = json.loads(base64.b64decode(posts_meta["content"]))
+            posts_data.setdefault("posts", []).append(post)
+            posts_data["last_updated"] = datetime.now(timezone.utc).isoformat()
+            _gh_put(POSTS_PATH, posts_meta["sha"], posts_data, "chore: approve community post")
+
+            pending_data["pending"] = [p for p in pending_data.get("pending", []) if p.get("id") != post_id]
+            _gh_put(PENDING_PATH, pending_meta["sha"], pending_data, "chore: remove approved post from pending")
+
             self._respond({"success": True})
         except urllib.error.HTTPError as e:
             self._respond({"success": False, "error": f"GitHub {e.code}"})

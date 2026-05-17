@@ -16,21 +16,26 @@ function renderPosts(posts) {
   const grid = document.getElementById('posts-grid');
 
   if (!posts.length) {
-    grid.innerHTML = '<div class="no-posts">目前沒有應援資訊，點擊「更新資料」載入</div>';
+    grid.innerHTML = '<div class="no-posts">目前沒有應援資訊</div>';
     return;
   }
 
-  const venue   = posts.filter(p => p.venue_type === 'venue'   || (!p.venue_type && p.source === 'threads'));
-  const offsite = posts.filter(p => p.venue_type === 'offsite');
+  const both = posts.filter(p => p.day === 'both' || !p.day);
+  const day1 = posts.filter(p => p.day === 'day1');
+  const day2 = posts.filter(p => p.day === 'day2');
 
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
+    const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 現場';
     return `
       <div class="post-card">
-        <span class="post-tag ${isCommunity ? 'community' : ''}">
-          ${isCommunity ? '✍️ 手動更新' : '🔍 Threads'}
-        </span>
+        <div class="post-card-tags">
+          <span class="post-tag ${isCommunity ? 'community' : ''}">
+            ${isCommunity ? '✍️ 手動更新' : '🔍 Threads'}
+          </span>
+          <span class="post-tag venue-tag">${venueLabel}</span>
+        </div>
         <div class="post-header">
           <div class="post-avatar">${initial}</div>
           <div>
@@ -43,16 +48,17 @@ function renderPosts(posts) {
       </div>`;
   };
 
-  let html = '';
+  const section = (label, items, addMt) => {
+    if (!items.length) return '';
+    return `<div class="posts-category-label${addMt ? ' mt' : ''}">${label}</div>
+            <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
+  };
 
-  if (venue.length) {
-    html += `<div class="posts-category-label">🎤 演唱會線下應援</div>
-             <div class="posts-grid-inner">${venue.map(cardHtml).join('')}</div>`;
-  }
-  if (offsite.length) {
-    html += `<div class="posts-category-label ${venue.length ? 'mt' : ''}">🏪 非演唱會現場應援</div>
-             <div class="posts-grid-inner">${offsite.map(cardHtml).join('')}</div>`;
-  }
+  let first = true;
+  let html = '';
+  if (both.length) { html += section('📅 7/11 + 7/12 都有應援', both, false); first = false; }
+  if (day1.length) { html += section('📅 單純 7/11（六）應援', day1, !first); first = false; }
+  if (day2.length) { html += section('📅 單純 7/12（日）應援', day2, !first); }
 
   grid.innerHTML = html;
 }
@@ -118,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (json.success) {
         successMsg.style.display = 'block';
         form.reset();
-        setTimeout(loadPosts, 800);
       } else {
         alert('送出失敗：' + (json.error || '請稍後再試'));
       }

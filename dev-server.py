@@ -1,5 +1,5 @@
 """
-本地開發伺服器：同時提供靜態檔案 + 處理 /api/submit POST
+本地開發伺服器：靜態檔案 + /api/submit、/api/approve、/api/delete
 用法：python dev-server.py
 """
 
@@ -9,14 +9,27 @@ from datetime import datetime, timezone
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 
-PORT = 8765
-DATA_FILE = Path(__file__).parent / "data" / "posts.json"
+PORT       = 8765
+POSTS_FILE   = Path(__file__).parent / "data" / "posts.json"
+PENDING_FILE = Path(__file__).parent / "data" / "pending.json"
+
+
+def _read_json(path: Path) -> dict:
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {"posts": []} if "posts" in path.name else {"pending": []}
+
+
+def _write_json(path: Path, obj: dict):
+    path.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path == "/api/submit":
             self._handle_submit()
+        elif self.path == "/api/approve":
+            self._handle_approve()
         elif self.path == "/api/delete":
             self._handle_delete()
         elif self.path == "/api/trigger":
@@ -25,65 +38,85 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_response(404)
             self.end_headers()
 
-    def _handle_submit(self):
+    def _read_body(self):
         length = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(length)
-        try:
-            data = json.loads(body)
-        except Exception:
-            self._json({"success": False, "error": "invalid JSON"}, 400)
-            return
+        return body, json.loads(body)
 
-        existing = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+    def _handle_submit(self):
+        body, data = self._read_body()
 
         text_parts = [data.get("event_name", "")]
         if data.get("description"):
             text_parts.append(data["description"])
         text = "\n".join(p for p in text_parts if p)
-
         contact = data.get("contact", "")
-        post_url = contact if contact.startswith("http") else None
 
         new_post = {
             "id": f"community_{abs(hash(body)) % 999999}",
             "username": data.get("organizer", ""),
             "text": text,
-            "url": post_url,
+            "url": contact if contact.startswith("http") else None,
             "date": datetime.now(timezone.utc).strftime("%Y/%m/%d"),
             "source": "community",
+            "venue_type": data.get("venue_type", ""),
+            "day": data.get("day", "both"),
             "event_name": data.get("event_name", ""),
             "event_date": data.get("event_date", ""),
             "location": data.get("location", ""),
             "contact": contact,
         }
 
-        existing.setdefault("posts", []).append(new_post)
-        existing["last_updated"] = datetime.now(timezone.utc).isoformat()
-        DATA_FILE.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"  [submit] saved: {new_post['username']} — {new_post['event_name']}")
+        pending = _read_json(PENDING_FILE)
+        pending.setdefault("pending", []).append(new_post)
+        _write_json(PENDING_FILE, pending)
+        print(f"  [submit→pending] {new_post['username']} — {new_post['event_name']}")
+        self._json({"success": True})
+
+    def _handle_approve(self):
+        _, data = self._read_body()
+        post_id = data.get("id")
+
+        pending = _read_json(PENDING_FILE)
+        post = next((p for p in pending.get("pending", []) if p.get("id") == post_id), None)
+        if not post:
+            self._json({"success": False, "error": "not found in pending"})
+            return
+
+        posts = _read_json(POSTS_FILE)
+        posts.setdefault("posts", []).append(post)
+        posts["last_updated"] = datetime.now(timezone.utc).isoformat()
+        _write_json(POSTS_FILE, posts)
+
+        pending["pending"] = [p for p in pending.get("pending", []) if p.get("id") != post_id]
+        _write_json(PENDING_FILE, pending)
+        print(f"  [approve] {post.get('username')} — {post.get('event_name')}")
         self._json({"success": True})
 
     def _handle_delete(self):
-        length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(length)
-        try:
-            data = json.loads(body)
-        except Exception:
-            self._json({"success": False, "error": "invalid JSON"}, 400)
-            return
-
+        _, data = self._read_body()
         post_id = data.get("id")
-        existing = json.loads(DATA_FILE.read_text(encoding="utf-8"))
-        before = len(existing.get("posts", []))
-        existing["posts"] = [p for p in existing.get("posts", []) if p.get("id") != post_id]
+        target  = data.get("target", "posts")
 
-        if len(existing["posts"]) == before:
+        if target == "pending":
+            obj = _read_json(PENDING_FILE)
+            key = "pending"
+            path = PENDING_FILE
+        else:
+            obj = _read_json(POSTS_FILE)
+            key = "posts"
+            path = POSTS_FILE
+
+        before = len(obj.get(key, []))
+        obj[key] = [p for p in obj.get(key, []) if p.get("id") != post_id]
+        if len(obj[key]) == before:
             self._json({"success": False, "error": "id not found"})
             return
 
-        existing["last_updated"] = datetime.now(timezone.utc).isoformat()
-        DATA_FILE.write_text(json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8")
-        print(f"  [delete] removed id: {post_id}")
+        if target != "pending":
+            obj["last_updated"] = datetime.now(timezone.utc).isoformat()
+        _write_json(path, obj)
+        print(f"  [delete/{target}] id: {post_id}")
         self._json({"success": True})
 
     def _json(self, obj, status=200):

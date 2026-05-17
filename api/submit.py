@@ -1,6 +1,6 @@
 """
 Vercel serverless — community fan support submission
-Commits the new post to data/posts.json via GitHub API so Vercel auto-redeploys.
+Saves to data/pending.json for admin review before publishing.
 """
 
 from http.server import BaseHTTPRequestHandler
@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 GITHUB_PAT   = os.environ.get("GITHUB_PAT", "")
 GITHUB_OWNER = os.environ.get("GITHUB_OWNER", "")
 GITHUB_REPO  = os.environ.get("GITHUB_REPO", "")
-FILE_PATH    = "data/posts.json"
+FILE_PATH    = "data/pending.json"
 
 
 def _gh_get():
@@ -23,8 +23,13 @@ def _gh_get():
         "Authorization": f"Bearer {GITHUB_PAT}",
         "Accept": "application/vnd.github.v3+json",
     })
-    with urllib.request.urlopen(req) as r:
-        return json.loads(r.read())
+    try:
+        with urllib.request.urlopen(req) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None
+        raise
 
 
 def _gh_put(sha, content_obj):
@@ -32,11 +37,10 @@ def _gh_put(sha, content_obj):
         json.dumps(content_obj, ensure_ascii=False, indent=2).encode()
     ).decode()
     url = f"https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{FILE_PATH}"
-    payload = json.dumps({
-        "message": "chore: add community fan support submission",
-        "content": encoded,
-        "sha": sha,
-    }).encode()
+    body = {"message": "chore: add pending fan support submission", "content": encoded}
+    if sha:
+        body["sha"] = sha
+    payload = json.dumps(body).encode()
     req = urllib.request.Request(url, data=payload, headers={
         "Authorization": f"Bearer {GITHUB_PAT}",
         "Accept": "application/vnd.github.v3+json",
@@ -60,6 +64,8 @@ def _build_post(data, body_bytes):
         "url": contact if contact.startswith("http") else None,
         "date": datetime.now(timezone.utc).strftime("%Y/%m/%d"),
         "source": "community",
+        "venue_type": data.get("venue_type", ""),
+        "day": data.get("day", "both"),
         "event_name": data.get("event_name", ""),
         "event_date": data.get("event_date", ""),
         "location": data.get("location", ""),
@@ -89,11 +95,16 @@ class handler(BaseHTTPRequestHandler):
 
         try:
             file_meta = _gh_get()
-            existing = json.loads(base64.b64decode(file_meta["content"]))
+            if file_meta:
+                existing = json.loads(base64.b64decode(file_meta["content"]))
+                sha = file_meta["sha"]
+            else:
+                existing = {"pending": []}
+                sha = None
+
             new_post = _build_post(data, body)
-            existing.setdefault("posts", []).append(new_post)
-            existing["last_updated"] = datetime.now(timezone.utc).isoformat()
-            ok = _gh_put(file_meta["sha"], existing)
+            existing.setdefault("pending", []).append(new_post)
+            ok = _gh_put(sha, existing)
             self._respond({"success": ok})
         except urllib.error.HTTPError as e:
             self._respond({"success": False, "error": f"GitHub {e.code}"})
