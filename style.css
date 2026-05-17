@@ -524,6 +524,76 @@ body {
   background-clip: text;
 }
 
+/* ── UNION POSTS ── */
+.union-account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.union-account-handle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.union-account-link {
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 20px;
+  transition: color .2s, border-color .2s;
+}
+.union-account-link:hover { color: var(--purple); border-color: rgba(124,58,237,.4); }
+
+.union-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.union-post-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color .2s, box-shadow .2s;
+  box-shadow: var(--shadow);
+}
+
+.union-post-row:hover {
+  border-color: rgba(124,58,237,.45);
+  box-shadow: 0 4px 16px rgba(124,58,237,.12);
+}
+
+.union-post-text {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+  min-width: 0;
+}
+
+.union-post-date {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.union-post-arrow {
+  font-size: 13px;
+  color: var(--purple);
+  flex-shrink: 0;
+}
+
 /* ── UNION SECTION ── */
 .union-header {
   display: flex;
