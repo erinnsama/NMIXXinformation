@@ -64,6 +64,10 @@ class Handler(SimpleHTTPRequestHandler):
             "event_name": data.get("event_name", ""),
             "event_date": data.get("event_date", ""),
             "location": data.get("location", ""),
+            "support_items": data.get("support_items", ""),
+            "quantity": data.get("quantity", ""),
+            "conditions": data.get("conditions", ""),
+            "distribution_time": data.get("distribution_time", ""),
             "contact": contact,
         }
 

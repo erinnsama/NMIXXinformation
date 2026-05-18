@@ -30,6 +30,13 @@ function renderPosts(posts) {
     const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
     const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
     const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
+    const infoBlock = (post.support_items || post.quantity || post.conditions || post.distribution_time) ? `
+        <div class="post-info-block">
+          ${post.support_items     ? `<div class="post-info-item"><span class="info-label">🎁 應援物</span>${safe(post.support_items)}</div>` : ''}
+          ${post.quantity          ? `<div class="post-info-item"><span class="info-label">📦 數量</span>${safe(post.quantity)}</div>` : ''}
+          ${post.conditions        ? `<div class="post-info-item"><span class="info-label">📋 條件</span>${safe(post.conditions)}</div>` : ''}
+          ${post.distribution_time ? `<div class="post-info-item"><span class="info-label">⏰ 發放時間</span>${safe(post.distribution_time)}</div>` : ''}
+        </div>` : '';
     return `
       <div class="post-card">
         <div class="post-card-tags">
@@ -45,6 +52,7 @@ function renderPosts(posts) {
           </div>
         </div>
         ${location}
+        ${infoBlock}
         <div class="post-text-wrap">
           <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
         </div>
