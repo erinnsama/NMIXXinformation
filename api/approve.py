@@ -6,6 +6,7 @@ from http.server import BaseHTTPRequestHandler
 import base64
 import json
 import os
+import time
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone
@@ -43,8 +44,12 @@ def _gh_put(path, sha, content_obj, message):
         "Content-Type": "application/json",
         "X-GitHub-Api-Version": "2022-11-28",
     }, method="PUT")
-    with urllib.request.urlopen(req) as r:
-        return r.status in (200, 201)
+    try:
+        with urllib.request.urlopen(req) as r:
+            return r.status in (200, 201)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")
+        raise urllib.error.HTTPError(e.url, e.code, body, e.headers, None)
 
 
 class handler(BaseHTTPRequestHandler):
@@ -72,38 +77,53 @@ class handler(BaseHTTPRequestHandler):
             self._respond({"success": False, "error": "missing id"})
             return
 
-        for attempt in range(3):
+        last_error = "unknown"
+        for attempt in range(4):
+            if attempt > 0:
+                time.sleep(0.8)
             try:
+                # ── 1. fetch pending ──
                 pending_meta = _gh_get(PENDING_PATH)
                 pending_data = json.loads(base64.b64decode(pending_meta["content"]))
-
                 post = next((p for p in pending_data.get("pending", []) if p.get("id") == post_id), None)
+
                 if not post:
+                    # might have already been approved in a previous partial attempt
                     self._respond({"success": False, "error": "post not found in pending"})
                     return
 
+                # ── 2. fetch posts ──
                 posts_meta = _gh_get(POSTS_PATH)
                 posts_data = json.loads(base64.b64decode(posts_meta["content"]))
-                posts_data.setdefault("posts", []).append(post)
-                posts_data["last_updated"] = datetime.now(timezone.utc).isoformat()
-                _gh_put(POSTS_PATH, posts_meta["sha"], posts_data, "chore: approve community post")
 
-                pending_data["pending"] = [p for p in pending_data.get("pending", []) if p.get("id") != post_id]
+                # skip writing posts.json if post is already there (partial retry)
+                already_in_posts = any(p.get("id") == post_id for p in posts_data.get("posts", []))
+                if not already_in_posts:
+                    posts_data.setdefault("posts", []).append(post)
+                    posts_data["last_updated"] = datetime.now(timezone.utc).isoformat()
+                    _gh_put(POSTS_PATH, posts_meta["sha"], posts_data, "chore: approve community post")
+
+                # ── 3. remove from pending ──
+                pending_data["pending"] = [p for p in pending_data["pending"] if p.get("id") != post_id]
                 _gh_put(PENDING_PATH, pending_meta["sha"], pending_data, "chore: remove approved post from pending")
 
                 self._respond({"success": True})
                 return
+
             except urllib.error.HTTPError as e:
-                if e.code == 409 and attempt < 2:
-                    continue  # SHA conflict — retry with fresh SHAs
-                self._respond({"success": False, "error": f"GitHub {e.code}"})
+                last_error = f"GitHub {e.code}: {e.reason[:120]}"
+                if e.code == 409:
+                    continue  # SHA conflict — refetch and retry
+                self._respond({"success": False, "error": last_error})
                 return
             except Exception as e:
                 self._respond({"success": False, "error": str(e)})
                 return
 
+        self._respond({"success": False, "error": f"重試失敗: {last_error}"})
+
     def _respond(self, obj):
-        body = json.dumps(obj).encode()
+        body = json.dumps(obj, ensure_ascii=False).encode()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self._cors()
