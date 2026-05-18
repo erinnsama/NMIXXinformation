@@ -34,7 +34,7 @@ function renderPosts(posts) {
         <div class="post-info-block">
           ${post.support_items     ? `<div class="post-info-item"><span class="info-label">🎁 應援物</span>${safe(post.support_items)}</div>` : ''}
           ${post.quantity          ? `<div class="post-info-item"><span class="info-label">📦 數量</span>${safe(post.quantity)}</div>` : ''}
-          ${post.conditions        ? `<div class="post-info-item"><span class="info-label">📋 條件</span>${safe(post.conditions)}</div>` : ''}
+          ${post.conditions        ? `<div class="post-info-item"><span class="info-label">📋 條件</span><span>${safe(post.conditions).replace(/\n/g, '<br>')}</span></div>` : ''}
           ${post.distribution_time ? `<div class="post-info-item"><span class="info-label">⏰ 發放時間</span>${safe(post.distribution_time)}</div>` : ''}
         </div>` : '';
     return `
