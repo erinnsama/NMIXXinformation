@@ -72,29 +72,35 @@ class handler(BaseHTTPRequestHandler):
             self._respond({"success": False, "error": "missing id"})
             return
 
-        try:
-            pending_meta = _gh_get(PENDING_PATH)
-            pending_data = json.loads(base64.b64decode(pending_meta["content"]))
+        for attempt in range(3):
+            try:
+                pending_meta = _gh_get(PENDING_PATH)
+                pending_data = json.loads(base64.b64decode(pending_meta["content"]))
 
-            post = next((p for p in pending_data.get("pending", []) if p.get("id") == post_id), None)
-            if not post:
-                self._respond({"success": False, "error": "post not found in pending"})
+                post = next((p for p in pending_data.get("pending", []) if p.get("id") == post_id), None)
+                if not post:
+                    self._respond({"success": False, "error": "post not found in pending"})
+                    return
+
+                posts_meta = _gh_get(POSTS_PATH)
+                posts_data = json.loads(base64.b64decode(posts_meta["content"]))
+                posts_data.setdefault("posts", []).append(post)
+                posts_data["last_updated"] = datetime.now(timezone.utc).isoformat()
+                _gh_put(POSTS_PATH, posts_meta["sha"], posts_data, "chore: approve community post")
+
+                pending_data["pending"] = [p for p in pending_data.get("pending", []) if p.get("id") != post_id]
+                _gh_put(PENDING_PATH, pending_meta["sha"], pending_data, "chore: remove approved post from pending")
+
+                self._respond({"success": True})
                 return
-
-            posts_meta = _gh_get(POSTS_PATH)
-            posts_data = json.loads(base64.b64decode(posts_meta["content"]))
-            posts_data.setdefault("posts", []).append(post)
-            posts_data["last_updated"] = datetime.now(timezone.utc).isoformat()
-            _gh_put(POSTS_PATH, posts_meta["sha"], posts_data, "chore: approve community post")
-
-            pending_data["pending"] = [p for p in pending_data.get("pending", []) if p.get("id") != post_id]
-            _gh_put(PENDING_PATH, pending_meta["sha"], pending_data, "chore: remove approved post from pending")
-
-            self._respond({"success": True})
-        except urllib.error.HTTPError as e:
-            self._respond({"success": False, "error": f"GitHub {e.code}"})
-        except Exception as e:
-            self._respond({"success": False, "error": str(e)})
+            except urllib.error.HTTPError as e:
+                if e.code == 409 and attempt < 2:
+                    continue  # SHA conflict — retry with fresh SHAs
+                self._respond({"success": False, "error": f"GitHub {e.code}"})
+                return
+            except Exception as e:
+                self._respond({"success": False, "error": str(e)})
+                return
 
     def _respond(self, obj):
         body = json.dumps(obj).encode()
