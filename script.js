@@ -95,15 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
+      let json;
+      try { json = await res.json(); } catch { json = {}; }
       if (json.success) {
         successMsg.style.display = 'block';
         form.reset();
       } else {
-        alert('送出失敗：' + (json.error || '請稍後再試'));
+        alert('送出失敗 (HTTP ' + res.status + ')：' + (json.error || '請稍後再試'));
       }
-    } catch {
-      alert('連線錯誤，請稍後再試。');
+    } catch (err) {
+      alert('連線錯誤：' + err.message);
     } finally {
       btn.textContent = '提交應援資訊';
       btn.disabled = false;
