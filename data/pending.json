@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_942766",
-      "username": "jean975520",
-      "text": "【LING】NMIXX演唱會應援-全員\n暫無",
-      "url": "https://www.threads.com/@jean975520/post/DYdympJEflj",
-      "date": "2026/05/18",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "day1",
-      "event_name": "【LING】NMIXX演唱會應援-全員",
-      "event_date": "",
-      "location": "演唱會現場",
-      "support_items": "實體票卡",
-      "quantity": "暫無",
-      "conditions": "暫無",
-      "distribution_time": "7/11",
-      "contact": "https://www.threads.com/@jean975520/post/DYdympJEflj"
-    }
-  ]
+  "pending": []
 }
