@@ -196,6 +196,81 @@
     }
     .del-btn:hover { background: rgba(240,80,80,.22); border-color: var(--red); }
 
+    .edit-btn {
+      background: rgba(110,232,245,.08);
+      border: 1px solid rgba(110,232,245,.3);
+      color: var(--cyan);
+      border-radius: 7px;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .edit-btn:hover { background: rgba(110,232,245,.18); border-color: var(--cyan); }
+
+    /* ── Edit Modal ── */
+    #edit-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #edit-modal.open { display: flex; }
+    .edit-modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .edit-modal-box h3 { font-size: 16px; margin-bottom: 20px; }
+    .edit-field { margin-bottom: 14px; }
+    .edit-field label { display: block; font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
+    .edit-field input, .edit-field textarea, .edit-field select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .edit-field input:focus, .edit-field textarea:focus, .edit-field select:focus {
+      outline: none; border-color: var(--purple);
+    }
+    .edit-field textarea { resize: vertical; }
+    .edit-modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .edit-save-btn {
+      flex: 1;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .edit-cancel-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
     .empty { text-align: center; color: var(--muted); padding: 28px; font-size: 14px; }
     .empty-pending {
       text-align: center;
@@ -271,6 +346,40 @@
   <!-- Published posts -->
   <div class="section-label">✅ 已發布應援資訊</div>
   <div id="post-list"></div>
+</div>
+
+<!-- Edit Modal -->
+<div id="edit-modal">
+  <div class="edit-modal-box">
+    <h3>✏️ 編輯貼文</h3>
+    <div class="edit-field"><label>活動名稱</label><input id="ef-event_name"></div>
+    <div class="edit-field"><label>應援物 🎁</label><input id="ef-support_items"></div>
+    <div class="edit-field"><label>數量 📦</label><input id="ef-quantity"></div>
+    <div class="edit-field"><label>應援條件 📋</label><textarea id="ef-conditions" rows="3"></textarea></div>
+    <div class="edit-field"><label>發放時間 ⏰</label><input id="ef-distribution_time"></div>
+    <div class="edit-field"><label>活動地點</label><input id="ef-location"></div>
+    <div class="edit-field"><label>說明文字</label><textarea id="ef-text" rows="3"></textarea></div>
+    <div class="edit-field"><label>原文連結</label><input id="ef-url"></div>
+    <div class="edit-field">
+      <label>演唱日期</label>
+      <select id="ef-day">
+        <option value="both">雙日（7/11 + 7/12）</option>
+        <option value="day1">7/11 周六場</option>
+        <option value="day2">7/12 周日場</option>
+      </select>
+    </div>
+    <div class="edit-field">
+      <label>活動類型</label>
+      <select id="ef-venue_type">
+        <option value="venue">🎤 演唱會現場</option>
+        <option value="offsite">🏪 非現場</option>
+      </select>
+    </div>
+    <div class="edit-modal-actions">
+      <button class="edit-save-btn" id="edit-save-btn" onclick="saveEdit()">儲存</button>
+      <button class="edit-cancel-btn" onclick="closeEdit()">取消</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -360,6 +469,7 @@
         </div>
         <div class="btn-group">
           <button class="approve-btn" onclick="approvePost(${i})">✅ 核准</button>
+          <button class="edit-btn" onclick="openEdit(${i},'pending')">✏️ 編輯</button>
           <button class="del-btn" onclick="rejectPost(${i})">✕ 拒絕</button>
         </div>
       </div>
@@ -389,7 +499,10 @@
             ${p.url ? `<a href="${p.url}" target="_blank" style="color:#6e8ef5">🔗 原文</a>` : ''}
           </div>
         </div>
-        <button class="del-btn" onclick="deletePost(${i})">刪除</button>
+        <div class="btn-group">
+          <button class="edit-btn" onclick="openEdit(${i},'posts')">✏️ 編輯</button>
+          <button class="del-btn" onclick="deletePost(${i})">刪除</button>
+        </div>
       </div>
     `).join('');
   }
@@ -450,6 +563,57 @@
       showToast('✅ 已刪除');
     } else {
       showToast('❌ 刪除失敗：' + (data.error || ''));
+    }
+  }
+
+  // ── Edit ──
+  let editTarget = null; // { index, target }
+
+  function openEdit(i, target) {
+    const post = target === 'pending' ? allPending[i] : allPosts[i];
+    editTarget = { index: i, target, id: post.id };
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','url','day','venue_type'];
+    fields.forEach(f => {
+      const el = document.getElementById('ef-' + f);
+      if (el) el.value = post[f] || '';
+    });
+    document.getElementById('edit-modal').classList.add('open');
+  }
+
+  function closeEdit() {
+    document.getElementById('edit-modal').classList.remove('open');
+    editTarget = null;
+  }
+
+  async function saveEdit() {
+    if (!editTarget) return;
+    const btn = document.getElementById('edit-save-btn');
+    btn.textContent = '儲存中⋯';
+    btn.disabled = true;
+
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','url','day','venue_type'];
+    const updates = {};
+    fields.forEach(f => { updates[f] = document.getElementById('ef-' + f).value; });
+
+    try {
+      const res = await fetch('/api/edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: editTarget.id, target: editTarget.target, fields: updates }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✅ 已儲存');
+        closeEdit();
+        await loadAll();
+      } else {
+        showToast('❌ 儲存失敗：' + (data.error || ''));
+      }
+    } catch (err) {
+      showToast('❌ 連線錯誤：' + err.message);
+    } finally {
+      btn.textContent = '儲存';
+      btn.disabled = false;
     }
   }
 

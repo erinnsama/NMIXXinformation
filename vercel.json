@@ -13,6 +13,7 @@
     { "src": "/api/approve", "dest": "/api/approve.py" },
     { "src": "/api/delete",  "dest": "/api/delete.py"  },
     { "src": "/api/trigger", "dest": "/api/trigger.py" },
+    { "src": "/api/edit",    "dest": "/api/edit.py"    },
     { "src": "/(.*)",        "dest": "/$1"             }
   ]
 }

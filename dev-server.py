@@ -34,6 +34,8 @@ class Handler(SimpleHTTPRequestHandler):
             self._handle_delete()
         elif self.path == "/api/trigger":
             self._json({"success": True, "note": "dev mode — no actual scrape triggered"})
+        elif self.path == "/api/edit":
+            self._handle_edit()
         else:
             self.send_response(404)
             self.end_headers()
@@ -95,6 +97,37 @@ class Handler(SimpleHTTPRequestHandler):
         pending["pending"] = [p for p in pending.get("pending", []) if p.get("id") != post_id]
         _write_json(PENDING_FILE, pending)
         print(f"  [approve] {post.get('username')} — {post.get('event_name')}")
+        self._json({"success": True})
+
+    def _handle_edit(self):
+        _, data = self._read_body()
+        post_id = data.get("id")
+        target  = data.get("target", "posts")
+        fields  = data.get("fields", {})
+        editable = {"event_name","text","location","support_items","quantity","conditions",
+                    "distribution_time","url","day","venue_type"}
+        fields = {k: v for k, v in fields.items() if k in editable}
+
+        if target == "pending":
+            obj = _read_json(PENDING_FILE); key = "pending"; path = PENDING_FILE
+        else:
+            obj = _read_json(POSTS_FILE); key = "posts"; path = POSTS_FILE
+
+        updated = False
+        for post in obj.get(key, []):
+            if post.get("id") == post_id:
+                post.update(fields)
+                updated = True
+                break
+
+        if not updated:
+            self._json({"success": False, "error": "post not found"})
+            return
+
+        if target != "pending":
+            obj["last_updated"] = datetime.now(timezone.utc).isoformat()
+        _write_json(path, obj)
+        print(f"  [edit/{target}] id: {post_id}")
         self._json({"success": True})
 
     def _handle_delete(self):
