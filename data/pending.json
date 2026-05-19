@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_418295",
+      "username": "sleepiggy.zip",
+      "text": "【りん】NMIXX演唱會應援\n1. NMIXX概念色的大腸髮圈\n(其他請原文檢視)",
+      "url": "https://www.threads.com/@sleepiggy.zip/post/DYgYxXdAolS",
+      "date": "2026/05/19",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "【りん】NMIXX演唱會應援",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "應援禮包",
+      "quantity": "手作數量有限",
+      "conditions": "暫無",
+      "distribution_time": "7/11、7/12",
+      "contact": "https://www.threads.com/@sleepiggy.zip/post/DYgYxXdAolS"
+    }
+  ]
 }
