@@ -277,13 +277,19 @@
 
 <script>
   const ADMIN_PW = 'nmixx2026';
+  const SESSION_KEY = 'nmixx_admin_ok';
+
+  function showPanel() {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+    loadAll();
+  }
 
   function unlock() {
     const val = document.getElementById('pw-input').value;
     if (val === ADMIN_PW) {
-      document.getElementById('lock').style.display = 'none';
-      document.getElementById('panel').style.display = 'block';
-      loadAll();
+      sessionStorage.setItem(SESSION_KEY, '1');
+      showPanel();
     } else {
       const err = document.getElementById('pw-error');
       err.style.display = 'block';
@@ -291,6 +297,8 @@
       setTimeout(() => err.style.display = 'none', 2000);
     }
   }
+
+  if (sessionStorage.getItem(SESSION_KEY) === '1') showPanel();
 
   let allPosts = [];
   let allPending = [];
