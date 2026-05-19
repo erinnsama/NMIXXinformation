@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_6158",
-      "username": "@connie_20060526",
-      "text": "NMIXX餵食布丁玩具應援",
-      "url": null,
-      "date": "2026/05/19",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "both",
-      "event_name": "NMIXX餵食布丁玩具應援",
-      "event_date": "",
-      "location": "當天會公告在脆",
-      "support_items": "布丁玩具 也可當吊飾",
-      "quantity": "213",
-      "conditions": "NMIXX粉絲證明則一\n如：小卡、手燈、泡泡、會員、票、專輯、娃娃",
-      "distribution_time": "當天會公告在脆",
-      "contact": "@connie_20060526"
-    }
-  ]
+  "pending": []
 }
