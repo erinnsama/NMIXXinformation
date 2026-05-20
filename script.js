@@ -63,7 +63,7 @@ function renderPosts(posts) {
   const section = (label, items, addMt, id) => {
     if (!items.length) return '';
     return `<div class="posts-category-section${addMt ? ' mt' : ''}" id="${id}">
-              <div class="posts-category-label">${label}</div>
+              <div class="posts-category-label">${label} <span class="category-count">共計 ${items.length} 個</span></div>
               <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>
             </div>`;
   };
