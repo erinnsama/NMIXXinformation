@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_683195",
-      "username": "qsc669900",
-      "text": "NMIXX 雙日膠片應援\n膠片應援(製作中),其他想到可能還會追加🤣\n兩天都會出現,一天各100個不挑款,隨機發送\n兩天第一位抓包我的啾擔有小禮(須有啾相關周邊或證明)",
-      "url": null,
-      "date": "2026/05/20",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "both",
-      "event_name": "NMIXX 雙日膠片應援",
-      "event_date": "",
-      "location": "大路癡隨機走(兩天都穿一件滿滿啾的衣服)",
-      "support_items": "個人膠片.團體膠片",
-      "quantity": "200",
-      "conditions": "任一粉絲證明即可",
-      "distribution_time": "車票買好後於脆公布",
-      "contact": "Threads : qsc669900"
-    }
-  ]
+  "pending": []
 }
