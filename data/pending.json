@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_121880",
-      "username": "ai_crazy_",
-      "text": "【Qi'應援】NMIXX演唱會應援-莉莉\n尚未確定",
-      "url": "https://www.threads.com/@ai_crazy_/post/DYgmhSxD_6z",
-      "date": "2026/05/20",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "both",
-      "event_name": "【Qi'應援】NMIXX演唱會應援-莉莉",
-      "event_date": "",
-      "location": "演唱會現場",
-      "support_items": "折疊梳子",
-      "quantity": "尚未確定",
-      "conditions": "尚未確定",
-      "distribution_time": "",
-      "contact": "https://www.threads.com/@ai_crazy_/post/DYgmhSxD_6z"
-    }
-  ]
+  "pending": []
 }
