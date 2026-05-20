@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_129007",
+      "username": "__haewlb9",
+      "text": "【미수/奎琅】NMIXX演唱會應援\n詳情請查看原文版主更新！",
+      "url": "https://www.threads.com/@__haewlb9/post/DYjVjiCkUP_",
+      "date": "2026/05/20",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day2",
+      "event_name": "【미수/奎琅】NMIXX演唱會應援",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "應援領帶",
+      "quantity": "30",
+      "conditions": "暫無",
+      "distribution_time": "7/12",
+      "contact": "https://www.threads.com/@__haewlb9/post/DYjVjiCkUP_"
+    }
+  ]
 }
