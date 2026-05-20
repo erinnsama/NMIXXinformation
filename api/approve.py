@@ -6,7 +6,6 @@ from http.server import BaseHTTPRequestHandler
 import base64
 import json
 import os
-import time
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone
@@ -78,9 +77,7 @@ class handler(BaseHTTPRequestHandler):
             return
 
         last_error = "unknown"
-        for attempt in range(4):
-            if attempt > 0:
-                time.sleep(0.8)
+        for attempt in range(3):
             try:
                 # ── 1. fetch pending ──
                 pending_meta = _gh_get(PENDING_PATH)
