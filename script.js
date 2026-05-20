@@ -60,17 +60,19 @@ function renderPosts(posts) {
       </div>`;
   };
 
-  const section = (label, items, addMt) => {
+  const section = (label, items, addMt, id) => {
     if (!items.length) return '';
-    return `<div class="posts-category-label${addMt ? ' mt' : ''}">${label}</div>
-            <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
+    return `<div class="posts-category-section${addMt ? ' mt' : ''}" id="${id}">
+              <div class="posts-category-label">${label}</div>
+              <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>
+            </div>`;
   };
 
   let first = true;
   let html = '';
-  if (both.length) { html += section('雙日應援區', both, false); first = false; }
-  if (day1.length) { html += section('7/11 周六場應援區', day1, !first); first = false; }
-  if (day2.length) { html += section('7/12 周日場應援區', day2, !first); }
+  if (both.length) { html += section('雙日應援區', both, false, 'cat-both'); first = false; }
+  if (day1.length) { html += section('7/11 周六場應援區', day1, !first, 'cat-day1'); first = false; }
+  if (day2.length) { html += section('7/12 周日場應援區', day2, !first, 'cat-day2'); }
 
   grid.innerHTML = html;
 }
@@ -80,6 +82,33 @@ function safe(str) {
   d.appendChild(document.createTextNode(str));
   return d.innerHTML;
 }
+
+// ── Nav dropdown ──
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.nav-drop-trigger').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      const dropdown = trigger.closest('.nav-dropdown');
+      if (!dropdown.classList.contains('open')) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+        dropdown.classList.add('open');
+      }
+    });
+  });
+
+  document.querySelectorAll('.nav-drop-menu a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+});
 
 // ── Submission form ──
 

@@ -275,6 +275,67 @@ body {
   background: rgba(124,58,237,.06);
 }
 
+/* ── NAV DROPDOWN ── */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-drop-trigger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.drop-chevron {
+  font-size: 10px;
+  transition: transform .2s;
+}
+
+.nav-dropdown.open .drop-chevron,
+.nav-dropdown:hover .drop-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-drop-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,.98);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 8px 28px rgba(124,58,237,.14);
+  min-width: 200px;
+  z-index: 200;
+  flex-direction: column;
+  gap: 2px;
+  backdrop-filter: blur(12px);
+}
+
+.nav-dropdown:hover .nav-drop-menu,
+.nav-dropdown.open .nav-drop-menu {
+  display: flex;
+}
+
+.nav-drop-menu a {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: none;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+}
+
+.nav-drop-menu a:hover {
+  background: rgba(124,58,237,.07);
+  color: var(--purple);
+}
+
 /* ── SECTIONS ── */
 .section { padding: 56px 20px; }
 .section-alt { background: var(--bg-alt); }
@@ -295,18 +356,19 @@ body {
 /* ── POSTS GRID ── */
 .posts-grid { display: flex; flex-direction: column; gap: 0; }
 
+.posts-category-section { }
+.posts-category-section.mt { margin-top: 36px; }
+
 .posts-category-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color: var(--text);
+  margin: 0 0 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
-.posts-category-label.mt { margin-top: 32px; }
 .posts-category-label::after {
   content: '';
   flex: 1;
