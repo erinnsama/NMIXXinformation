@@ -88,12 +88,11 @@ function safe(str) {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-drop-trigger').forEach(trigger => {
     trigger.addEventListener('click', (e) => {
+      e.preventDefault();
       const dropdown = trigger.closest('.nav-dropdown');
-      if (!dropdown.classList.contains('open')) {
-        e.preventDefault();
-        document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-        dropdown.classList.add('open');
-      }
+      const isOpen = dropdown.classList.contains('open');
+      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+      if (!isOpen) dropdown.classList.add('open');
     });
   });
 
