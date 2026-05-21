@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-21T00:05:19.664807+00:00",
+  "last_updated": "2026-05-21T13:08:42.957487+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -558,6 +558,24 @@
       "conditions": "1. 出示任一天演唱會門票或粉絲證明\n2. 一人限領一個不可代領",
       "distribution_time": "",
       "contact": "https://www.threads.com/@l_arte_320/post/DYkbna6k12m"
+    },
+    {
+      "id": "community_328123",
+      "username": "mixxan_19",
+      "text": "mixxan_19\n視情況調整數量",
+      "url": "https://www.threads.com/@mixxan_19/post/DYmKOPVEx3o",
+      "date": "2026/05/21",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "mixxan_19",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "AOz車牌吊飾",
+      "quantity": "30",
+      "conditions": "暫無",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@mixxan_19/post/DYmKOPVEx3o"
     }
   ]
 }
