@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-21T13:16:09.178868+00:00",
+  "last_updated": "2026-05-21T13:16:14.891814+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -666,6 +666,24 @@
       "conditions": "待公布",
       "distribution_time": "",
       "contact": "https://www.threads.com/@erruo.9/post/DYXkcafEoPd"
+    },
+    {
+      "id": "community_911365",
+      "username": "millyiwoo",
+      "text": "millyiwoo\n領取時需出示粉絲證明\n時間地點當天才會發文公告在這隻帳號\n",
+      "url": "https://www.threads.com/@millyiwoo/post/DYmNk_miROO",
+      "date": "2026/05/21",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "millyiwoo",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "湯匙",
+      "quantity": "60",
+      "conditions": "「你好，我吃一點」湯匙\n領取時需出示粉絲證明",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@millyiwoo/post/DYmNk_miROO"
     }
   ]
 }
