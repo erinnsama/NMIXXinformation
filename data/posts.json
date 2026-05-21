@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-21T13:09:04.278018+00:00",
+  "last_updated": "2026-05-21T13:16:09.178868+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -648,6 +648,24 @@
       "conditions": "暫無資訊",
       "distribution_time": "",
       "contact": "https://www.threads.com/@realove._.439/post/DYhmuDrD0Bn"
+    },
+    {
+      "id": "community_448670",
+      "username": "erruo.9",
+      "text": "erruo.9\n待公布",
+      "url": "https://www.threads.com/@erruo.9/post/DYXkcafEoPd",
+      "date": "2026/05/21",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "erruo.9",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "紋身貼紙",
+      "quantity": "待公布",
+      "conditions": "待公布",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@erruo.9/post/DYXkcafEoPd"
     }
   ]
 }
