@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_328123",
+      "username": "mixxan_19",
+      "text": "mixxan_19\n視情況調整數量",
+      "url": "https://www.threads.com/@mixxan_19/post/DYmKOPVEx3o",
+      "date": "2026/05/21",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "mixxan_19",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "AOz車牌吊飾",
+      "quantity": "30",
+      "conditions": "暫無",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@mixxan_19/post/DYmKOPVEx3o"
+    }
+  ]
 }
