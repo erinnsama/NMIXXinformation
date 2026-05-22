@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-21T14:52:55.506596+00:00",
+  "last_updated": "2026-05-22T02:23:23.153033+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -738,6 +738,24 @@
       "conditions": "暫時未定",
       "distribution_time": "",
       "contact": "https://www.threads.com/@rourourou_22/post/DYWAe46mzbK"
+    },
+    {
+      "id": "community_394489",
+      "username": "nmixx.nswer.kpop",
+      "text": "咦！",
+      "url": "",
+      "date": "2026/05/22",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "咦！",
+      "event_date": "",
+      "location": "",
+      "support_items": "帆布袋",
+      "quantity": "30",
+      "conditions": "6月線上應援\n現場換物\n詳情6月脆上公布",
+      "distribution_time": "",
+      "contact": "Nmixx.nswer.kpop"
     }
   ]
 }
