@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_355441",
+      "username": "feilryu.m__",
+      "text": "Fei\n兩天各發20份",
+      "url": "https://www.threads.com/@feilryu.m__/post/DYrsXgjD35K",
+      "date": "2026/05/23",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "Fei",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "NMIXX的歌曲封面16宮格拼圖",
+      "quantity": "40",
+      "conditions": "1.任何成員的泡泡需超過100天\n2.追蹤 nmixx_official\n以上兩者皆需完成才發送\n切記應援物不得轉售 不可代領 每人只限領一份",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@feilryu.m__/post/DYrsXgjD35K"
+    }
+  ]
 }
