@@ -25,6 +25,12 @@ def _write_json(path: Path, obj: dict):
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path.split("?", 1)[0] == "/api/pending":
+            self._json(_read_json(PENDING_FILE))
+            return
+        super().do_GET()
+
     def do_POST(self):
         if self.path == "/api/submit":
             self._handle_submit()

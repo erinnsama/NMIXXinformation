@@ -14,6 +14,7 @@
     { "src": "/api/delete",  "dest": "/api/delete.py"  },
     { "src": "/api/trigger", "dest": "/api/trigger.py" },
     { "src": "/api/edit",    "dest": "/api/edit.py"    },
+    { "src": "/api/pending", "dest": "/api/pending.py" },
     { "src": "/(.*)",        "dest": "/$1"             }
   ]
 }
