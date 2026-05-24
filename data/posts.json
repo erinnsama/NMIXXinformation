@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-24T14:33:45.987051+00:00",
+  "last_updated": "2026-05-24T14:33:47.596635+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -918,6 +918,24 @@
       "conditions": "NMIXX任何相關物（小卡/週邊/演唱會票...）\n一人限領一物 ",
       "distribution_time": "",
       "contact": "https://www.threads.com/@nsweronce/post/DYuENOhD5_T"
+    },
+    {
+      "id": "community_369061",
+      "username": "ly.totoro",
+      "text": "ly.totoro\n兩日各發50條，詳細領取方式待正式公布時一併公佈",
+      "url": "https://www.threads.com/@ly.totoro/post/DYuOT_9ATzs",
+      "date": "2026/05/24",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "ly.totoro",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "應援髮帶",
+      "quantity": "100",
+      "conditions": "暫未公布",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@ly.totoro/post/DYuOT_9ATzs"
     }
   ]
 }
