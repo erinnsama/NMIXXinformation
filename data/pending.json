@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_562678",
-      "username": "how1z",
-      "text": "柯基\n超商ibon票夾 至超商ibon 使用留言區代碼列印",
-      "url": "https://www.threads.com/@how1z/post/DYoe3jMk8yI?sort_order=recent&filter_type=all",
-      "date": "2026/05/25",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "both",
-      "event_name": "柯基",
-      "event_date": "",
-      "location": "高雄巨蛋",
-      "support_items": "票夾",
-      "quantity": "未訂",
-      "conditions": "未訂 詳情請至原文",
-      "distribution_time": "",
-      "contact": "https://www.threads.com/@how1z/post/DYoe3jMk8yI?sort_order=recent&filter_type=all"
-    }
-  ]
+  "pending": []
 }
