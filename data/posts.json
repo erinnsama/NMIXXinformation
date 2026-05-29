@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-29T15:49:58.742793+00:00",
+  "last_updated": "2026-05-29T15:54:58.662316+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -1422,6 +1422,24 @@
       "conditions": "1.粉絲證明（泡泡、小卡、周邊不限）\n2.追蹤兩位設計者或diving_with_nmixx",
       "distribution_time": "",
       "contact": "https://www.threads.com/@squirrel_toy/post/DY4HeYQkTRl?xmt=AQG0Tsm4Debu_16PpSwWIby1_pxZXnRqKpGQy21OWnY-5dcYtD0RQP2zUd2HVyE23NZqz-n0&slof=1"
+    },
+    {
+      "id": "community_184416",
+      "username": "sksoo.x",
+      "text": "sksoo.x\n預計是一個成員9份 共9*6=54",
+      "url": "https://www.threads.com/@sksoo.x/post/DY7EcPREyrt",
+      "date": "2026/05/29",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day1",
+      "event_name": "sksoo.x",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "恩密徽章",
+      "quantity": "54",
+      "conditions": "暫無",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@sksoo.x/post/DY7EcPREyrt"
     }
   ]
 }
