@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-29T16:05:18.573878+00:00",
+  "last_updated": "2026-05-29T16:05:20.352656+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -1512,6 +1512,24 @@
       "conditions": "1. 追蹤官方帳號 nmixx_official\n2. 出示粉絲證明（娃、泡泡...等）",
       "distribution_time": "",
       "contact": "https://www.threads.com/@nn0i.r/post/DY6bl2Tk8_W"
+    },
+    {
+      "id": "community_111527",
+      "username": "strawberry_xitang",
+      "text": "找到我就可以領了",
+      "url": "https://www.threads.com/@strawberry_xitang/post/DYuU39yE4TC",
+      "date": "2026/05/29",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day1",
+      "event_name": "草莓羲糖",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "鐳射票根、直拍封面小卡",
+      "quantity": "各50",
+      "conditions": "暫無",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@strawberry_xitang/post/DYuU39yE4TC"
     }
   ]
 }
