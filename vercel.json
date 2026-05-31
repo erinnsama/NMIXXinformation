@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "ignoreCommand": "! git diff --name-only HEAD^ HEAD | grep -qv '^data/'",
   "builds": [
     { "src": "api/*.py",  "use": "@vercel/python" },
     { "src": "*.html",    "use": "@vercel/static" },
