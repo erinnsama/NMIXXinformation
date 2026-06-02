@@ -3,7 +3,7 @@
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
-    const res = await fetch('data/posts.json');
+    const res = await fetch('/api/posts');
     const data = await res.json();
 
     renderPosts(data.posts || []);
