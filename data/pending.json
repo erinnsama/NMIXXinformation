@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_338758",
+      "username": "93.08.02fu",
+      "text": "阿偉",
+      "url": null,
+      "date": "2026/06/04",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "阿偉",
+      "event_date": "",
+      "location": "當天帳號公佈發放時間地點",
+      "support_items": "杯套、貼紙、明信片",
+      "quantity": "100個",
+      "conditions": "這要是NSWER都來",
+      "distribution_time": "",
+      "contact": ""
+    }
+  ]
 }
