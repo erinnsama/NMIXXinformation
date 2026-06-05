@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_309667",
-      "username": "yumi_funland",
-      "text": "尤樂園\n第一次做應援小物，在飛機上手繪完成。",
-      "url": "https://www.threads.com/@yumi_funland/post/DZFoYIpErCc",
-      "date": "2026/06/05",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "day1",
-      "event_name": "尤樂園",
-      "event_date": "",
-      "location": "未公告",
-      "support_items": "應援小卡",
-      "quantity": "待補充",
-      "conditions": "未公布",
-      "distribution_time": "",
-      "contact": "https://www.threads.com/@yumi_funland/post/DZFoYIpErCc"
-    }
-  ]
+  "pending": []
 }
