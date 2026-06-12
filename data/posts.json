@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T15:38:44.203009+00:00",
+  "last_updated": "2026-06-12T15:39:29.552436+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -2718,6 +2718,24 @@
       "conditions": "出示這篇貼文的人類恩瑟（偶爾會變狗也可以）",
       "distribution_time": "",
       "contact": "https://www.threads.com/@o.ow06/post/DZeTx8TktBU"
+    },
+    {
+      "id": "community_156201",
+      "username": "oct.40bae",
+      "text": "當天會在 @oct.40bae 帳號上傳所在位置。",
+      "url": "https://www.threads.com/@oct.40bae/post/DZeRcUHEk47",
+      "date": "2026/06/12",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day2",
+      "event_name": "歐西踢",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "愛心相框",
+      "quantity": "請查看原文",
+      "conditions": "身上有任一 NMIXX 官方周邊即可領取\n（手燈、娃娃、小卡、衣服等，粉絲應援物不算內）",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@oct.40bae/post/DZeRcUHEk47"
     }
   ]
 }
