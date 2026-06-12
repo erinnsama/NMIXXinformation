@@ -576,11 +576,19 @@
 
   function openEdit(i, target) {
     const post = target === 'pending' ? allPending[i] : allPosts[i];
+    if (!post) return;
     editTarget = { index: i, target, id: post.id };
     const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','url','day','venue_type'];
     fields.forEach(f => {
       const el = document.getElementById('ef-' + f);
-      if (el) el.value = post[f] || '';
+      if (!el) return;
+      const v = String(post[f] ?? '');
+      if (el.tagName === 'SELECT') {
+        const idx = Array.from(el.options).findIndex(o => o.value === v);
+        el.selectedIndex = idx >= 0 ? idx : 0;
+      } else {
+        el.value = v;
+      }
     });
     document.getElementById('edit-modal').classList.add('open');
   }
