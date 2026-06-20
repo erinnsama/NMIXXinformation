@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-20T03:55:25.441839+00:00",
+  "last_updated": "2026-06-20T03:55:47.583057+00:00",
   "posts": [
     {
       "id": "community_853152",
@@ -3510,6 +3510,24 @@
       "conditions": "1. 出示這篇貼文\n2. 出示恩密相關週邊（手燈、小卡、娃娃等）",
       "distribution_time": "",
       "contact": "https://www.threads.com/@csimt_no.1/post/DZwjnaekt3E"
+    },
+    {
+      "id": "community_308637",
+      "username": "nmixx_kyuchien",
+      "text": "1. 圭珍飯制款\n2. 下午 14:00-15:00 發放\n3. 一人限領一個\n4. 本人只去一天但禮拜日沒意外也會在場外",
+      "url": "https://www.threads.com/@nmixx_kyuchien/post/DZwp-sjgUAU",
+      "date": "2026/06/20",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "both",
+      "event_name": "nmixx_kyuchien",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "收納袋",
+      "quantity": "一天限量 150 份（兩天共 300 份）",
+      "conditions": "1. 出示這篇貼文即可領取一份",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@nmixx_kyuchien/post/DZwp-sjgUAU"
     }
   ]
 }
