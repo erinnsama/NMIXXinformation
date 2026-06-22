@@ -1,3 +1,22 @@
 {
-  "pending": []
+  "pending": [
+    {
+      "id": "community_889987",
+      "username": "tinnyyy__0222",
+      "text": "tinnyyy__0222\n1. 還會有其他應援物（如果來得及做完）",
+      "url": "https://www.threads.com/@tinnyyy__0222/post/DZ5FBJHmgZf",
+      "date": "2026/06/22",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day2",
+      "event_name": "tinnyyy__0222",
+      "event_date": "",
+      "location": "演唱會現場",
+      "support_items": "請查看原文",
+      "quantity": "請查看原文",
+      "conditions": "請查看原文",
+      "distribution_time": "",
+      "contact": "https://www.threads.com/@tinnyyy__0222/post/DZ5FBJHmgZf"
+    }
+  ]
 }
