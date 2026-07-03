@@ -58,10 +58,7 @@ class Handler(SimpleHTTPRequestHandler):
     def _handle_submit(self):
         body, data = self._read_body()
 
-        text_parts = [data.get("event_name", "")]
-        if data.get("description"):
-            text_parts.append(data["description"])
-        text = "\n".join(p for p in text_parts if p)
+        text = data.get("description", "") or ""
         contact = data.get("contact", "")
 
         raw_urls = data.get("urls")

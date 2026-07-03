@@ -52,10 +52,7 @@ def _gh_put(sha, content_obj):
 
 
 def _build_post(data, body_bytes):
-    text_parts = [data.get("event_name", "")]
-    if data.get("description"):
-        text_parts.append(data["description"])
-    text = "\n".join(p for p in text_parts if p)
+    text = data.get("description", "") or ""
     contact = data.get("contact", "")
 
     raw_urls = data.get("urls")
