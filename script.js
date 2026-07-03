@@ -24,12 +24,20 @@ function renderPosts(posts) {
   const day1 = posts.filter(p => p.day === 'day1');
   const day2 = posts.filter(p => p.day === 'day2');
 
+  const getUrls = p => {
+    if (Array.isArray(p.urls) && p.urls.length) return p.urls.filter(Boolean);
+    if (p.url) return [p.url];
+    return [];
+  };
+
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
     const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
     const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
     const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
+    const urls = getUrls(post);
+    const urlsHtml = urls.map((u, i) => `<a href="${safe(u)}" target="_blank" rel="noopener" class="post-link">查看原文${urls.length > 1 ? ' ' + (i+1) : ''} →</a>`).join('');
     const infoBlock = (post.support_items || post.quantity || post.conditions || post.distribution_time) ? `
         <div class="post-info-block">
           ${post.support_items     ? `<div class="post-info-item"><span class="info-label">🎁 應援物</span>${safe(post.support_items)}</div>` : ''}
@@ -56,7 +64,7 @@ function renderPosts(posts) {
         <div class="post-text-wrap">
           <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
         </div>
-        ${post.url ? `<a href="${post.url}" target="_blank" rel="noopener" class="post-link">查看原文 →</a>` : ''}
+        ${urlsHtml}
       </div>`;
   };
 

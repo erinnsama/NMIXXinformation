@@ -57,11 +57,21 @@ def _build_post(data, body_bytes):
         text_parts.append(data["description"])
     text = "\n".join(p for p in text_parts if p)
     contact = data.get("contact", "")
+
+    raw_urls = data.get("urls")
+    if isinstance(raw_urls, list):
+        urls = [u.strip() for u in raw_urls if isinstance(u, str) and u.strip()][:3]
+    elif contact.startswith("http"):
+        urls = [contact]
+    else:
+        urls = []
+
     return {
         "id": f"community_{abs(hash(body_bytes)) % 999999}",
         "username": data.get("organizer", ""),
         "text": text,
-        "url": contact if contact.startswith("http") else None,
+        "url": urls[0] if urls else None,
+        "urls": urls,
         "date": datetime.now(timezone.utc).strftime("%Y/%m/%d"),
         "source": "community",
         "venue_type": data.get("venue_type", ""),

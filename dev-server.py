@@ -64,11 +64,20 @@ class Handler(SimpleHTTPRequestHandler):
         text = "\n".join(p for p in text_parts if p)
         contact = data.get("contact", "")
 
+        raw_urls = data.get("urls")
+        if isinstance(raw_urls, list):
+            urls = [u.strip() for u in raw_urls if isinstance(u, str) and u.strip()][:3]
+        elif contact.startswith("http"):
+            urls = [contact]
+        else:
+            urls = []
+
         new_post = {
             "id": f"community_{abs(hash(body)) % 999999}",
             "username": data.get("organizer", ""),
             "text": text,
-            "url": contact if contact.startswith("http") else None,
+            "url": urls[0] if urls else None,
+            "urls": urls,
             "date": datetime.now(timezone.utc).strftime("%Y/%m/%d"),
             "source": "community",
             "venue_type": data.get("venue_type", ""),
@@ -115,7 +124,7 @@ class Handler(SimpleHTTPRequestHandler):
         target  = data.get("target", "posts")
         fields  = data.get("fields", {})
         editable = {"event_name","text","location","support_items","quantity","conditions",
-                    "distribution_time","url","day","venue_type"}
+                    "distribution_time","url","urls","day","venue_type"}
         fields = {k: v for k, v in fields.items() if k in editable}
 
         if target == "pending":

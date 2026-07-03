@@ -359,7 +359,9 @@
     <div class="edit-field"><label>發放時間 ⏰</label><input id="ef-distribution_time"></div>
     <div class="edit-field"><label>活動地點</label><input id="ef-location"></div>
     <div class="edit-field"><label>說明文字</label><textarea id="ef-text" rows="3"></textarea></div>
-    <div class="edit-field"><label>原文連結</label><input id="ef-url"></div>
+    <div class="edit-field"><label>原文連結 1</label><input id="ef-url_1" placeholder="https://..."></div>
+    <div class="edit-field"><label>原文連結 2（選填）</label><input id="ef-url_2" placeholder="https://..."></div>
+    <div class="edit-field"><label>原文連結 3（選填）</label><input id="ef-url_3" placeholder="https://..."></div>
     <div class="edit-field">
       <label>演唱日期</label>
       <select id="ef-day">
@@ -464,7 +466,7 @@
           <div class="post-text">${esc(p.text || '').replace(/\n/g, '<br>')}</div>
           <div class="post-extra">
             ${p.location ? `<span>📍 ${esc(p.location)}</span>` : ''}
-            ${p.url ? `<a href="${p.url}" target="_blank" style="color:#6e8ef5">🔗 原文</a>` : ''}
+            ${getUrls(p).map((u, ui) => `<a href="${u}" target="_blank" style="color:#6e8ef5;margin-right:8px">🔗 原文${getUrls(p).length > 1 ? ' ' + (ui+1) : ''}</a>`).join('')}
           </div>
         </div>
         <div class="btn-group">
@@ -496,7 +498,7 @@
           <div class="post-text">${esc(p.text || '').replace(/\n/g, '<br>')}</div>
           <div class="post-extra">
             ${p.location ? `<span>📍 ${esc(p.location)}</span>` : ''}
-            ${p.url ? `<a href="${p.url}" target="_blank" style="color:#6e8ef5">🔗 原文</a>` : ''}
+            ${getUrls(p).map((u, ui) => `<a href="${u}" target="_blank" style="color:#6e8ef5;margin-right:8px">🔗 原文${getUrls(p).length > 1 ? ' ' + (ui+1) : ''}</a>`).join('')}
           </div>
         </div>
         <div class="btn-group">
@@ -574,11 +576,17 @@
   // ── Edit ──
   let editTarget = null; // { index, target }
 
+  function getUrls(p) {
+    if (Array.isArray(p.urls) && p.urls.length) return p.urls.filter(Boolean);
+    if (p.url) return [p.url];
+    return [];
+  }
+
   function openEdit(i, target) {
     const post = target === 'pending' ? allPending[i] : allPosts[i];
     if (!post) return;
     editTarget = { index: i, target, id: post.id };
-    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','url','day','venue_type'];
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type'];
     fields.forEach(f => {
       const el = document.getElementById('ef-' + f);
       if (!el) return;
@@ -590,6 +598,10 @@
         el.value = v;
       }
     });
+    const urls = getUrls(post);
+    document.getElementById('ef-url_1').value = urls[0] || '';
+    document.getElementById('ef-url_2').value = urls[1] || '';
+    document.getElementById('ef-url_3').value = urls[2] || '';
     document.getElementById('edit-modal').classList.add('open');
   }
 
@@ -604,9 +616,16 @@
     btn.textContent = '儲存中⋯';
     btn.disabled = true;
 
-    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','url','day','venue_type'];
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type'];
     const updates = {};
     fields.forEach(f => { updates[f] = document.getElementById('ef-' + f).value; });
+    const urls = [
+      document.getElementById('ef-url_1').value.trim(),
+      document.getElementById('ef-url_2').value.trim(),
+      document.getElementById('ef-url_3').value.trim(),
+    ].filter(Boolean);
+    updates.urls = urls;
+    updates.url = urls[0] || '';
 
     try {
       const res = await fetch('/api/edit', {
