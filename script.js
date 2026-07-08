@@ -1,15 +1,40 @@
 // ── Posts ──
 
+let allPostsPublic = [];
+
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
     const res = await fetch('/api/posts');
     const data = await res.json();
-
-    renderPosts(data.posts || []);
+    allPostsPublic = data.posts || [];
+    applyPostFilter();
   } catch {
     grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
   }
+}
+
+function applyPostFilter() {
+  const input = document.getElementById('post-search');
+  const countEl = document.getElementById('post-search-count');
+  const q = (input && input.value || '').trim().toLowerCase();
+
+  if (!q) {
+    if (countEl) countEl.textContent = '';
+    renderPosts(allPostsPublic);
+    return;
+  }
+
+  const matches = allPostsPublic.filter(p => {
+    const haystack = [
+      p.username, p.event_name, p.support_items, p.quantity,
+      p.conditions, p.location, p.text, p.event_date, p.distribution_time
+    ].filter(Boolean).join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+
+  if (countEl) countEl.textContent = `找到 ${matches.length} / ${allPostsPublic.length} 筆`;
+  renderPosts(matches);
 }
 
 function renderPosts(posts) {
@@ -121,6 +146,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPosts();
+
+  const searchInput = document.getElementById('post-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', applyPostFilter);
+  }
 
   const form = document.getElementById('submit-form');
   const successMsg = document.getElementById('form-success');
