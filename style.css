@@ -762,6 +762,21 @@ body {
 .landmark-desc { font-size: 12px; color: var(--muted); }
 .landmark-nav { font-size: 11px; color: var(--purple); margin-top: 8px; font-weight: 600; }
 
+.landmark-card--shop { cursor: default; }
+.landmark-card--shop:hover { border-color: rgba(124,58,237,.45); box-shadow: none; }
+.landmark-links { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.landmark-link {
+  font-size: 11px;
+  color: var(--purple);
+  font-weight: 600;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.landmark-link:hover { border-color: var(--purple); }
+
 /* ── SUPPORT PLACEHOLDER ── */
 .support-placeholder {
   background: var(--bg-card);
