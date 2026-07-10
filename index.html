@@ -36,24 +36,20 @@
 
   <!-- Nav -->
   <nav class="nav">
-    <a href="#fan-support">應援資訊</a>
+    <div class="nav-dropdown-wrap">
+      <a href="#fan-support" class="nav-link-main">應援資訊 <span class="nav-chevron">▾</span></a>
+      <div class="nav-drop">
+        <a class="nav-drop-item" data-section="section-both">🗓️ 雙日應援區</a>
+        <a class="nav-drop-item" data-section="section-day1">📅 7/13 應援區</a>
+        <a class="nav-drop-item" data-section="section-day2">📅 7/12 應援區</a>
+      </div>
+    </div>
+    <a href="#landmarks">周邊地標</a>
     <a href="#transport">交通指南</a>
     <a href="#union">聯應團隊資訊同步區</a>
     <a href="#notes">注意事項</a>
     <a href="#submit">應援資訊提交</a>
   </nav>
-
-  <!-- 周邊地標置頂橫幅 -->
-  <div class="landmark-banner">
-    <div class="landmark-banner-track">
-      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=高雄巨蛋" target="_blank" rel="noopener">🎵 高雄巨蛋</a>
-      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=漢神巨蛋+高雄左營" target="_blank" rel="noopener">🛍️ 漢神巨蛋</a>
-      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=瑞豐夜市+高雄" target="_blank" rel="noopener">🌙 瑞豐夜市</a>
-      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=高鐵左營站" target="_blank" rel="noopener">🚄 高鐵左營站</a>
-      <a class="lm-chip highlight" href="https://www.google.com/maps/search/?api=1&query=洋洋本屋+高雄左營" target="_blank" rel="noopener">🎪 NMIXX應援展覽</a>
-      <a class="lm-chip highlight" href="https://www.google.com/maps/search/?api=1&query=AILAV+高雄" target="_blank" rel="noopener">🍽️ AILAV</a>
-    </div>
-  </div>
 
   <!-- Fan Support Posts -->
   <section class="section" id="fan-support">
@@ -130,7 +126,7 @@
         ></iframe>
       </div>
 
-      <div class="transport-sub-label">周邊地標</div>
+      <div class="transport-sub-label" id="landmarks">周邊地標</div>
       <div class="landmark-grid">
         <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=高鐵左營站" target="_blank" rel="noopener">
           <div class="landmark-icon">🚄</div>
