@@ -1,40 +1,15 @@
 // ── Posts ──
 
-let allPostsPublic = [];
-
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
-    const res = await fetch('/api/posts');
+    const res = await fetch('data/posts.json');
     const data = await res.json();
-    allPostsPublic = data.posts || [];
-    applyPostFilter();
+
+    renderPosts(data.posts || []);
   } catch {
     grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
   }
-}
-
-function applyPostFilter() {
-  const input = document.getElementById('post-search');
-  const countEl = document.getElementById('post-search-count');
-  const q = (input && input.value || '').trim().toLowerCase();
-
-  if (!q) {
-    if (countEl) countEl.textContent = '';
-    renderPosts(allPostsPublic);
-    return;
-  }
-
-  const matches = allPostsPublic.filter(p => {
-    const haystack = [
-      p.username, p.event_name, p.support_items, p.quantity,
-      p.conditions, p.location, p.text, p.event_date, p.distribution_time
-    ].filter(Boolean).join(' ').toLowerCase();
-    return haystack.includes(q);
-  });
-
-  if (countEl) countEl.textContent = `找到 ${matches.length} / ${allPostsPublic.length} 筆`;
-  renderPosts(matches);
 }
 
 function renderPosts(posts) {
@@ -49,20 +24,12 @@ function renderPosts(posts) {
   const day1 = posts.filter(p => p.day === 'day1');
   const day2 = posts.filter(p => p.day === 'day2');
 
-  const getUrls = p => {
-    if (Array.isArray(p.urls) && p.urls.length) return p.urls.filter(Boolean);
-    if (p.url) return [p.url];
-    return [];
-  };
-
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
     const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
     const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
     const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
-    const urls = getUrls(post);
-    const urlsHtml = urls.map((u, i) => `<a href="${safe(u)}" target="_blank" rel="noopener" class="post-link">查看原文${urls.length > 1 ? ' ' + (i+1) : ''} →</a>`).join('');
     const infoBlock = (post.support_items || post.quantity || post.conditions || post.distribution_time) ? `
         <div class="post-info-block">
           ${post.support_items     ? `<div class="post-info-item"><span class="info-label">🎁 應援物</span>${safe(post.support_items)}</div>` : ''}
@@ -89,23 +56,21 @@ function renderPosts(posts) {
         <div class="post-text-wrap">
           <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
         </div>
-        ${urlsHtml}
+        ${post.url ? `<a href="${post.url}" target="_blank" rel="noopener" class="post-link">查看原文 →</a>` : ''}
       </div>`;
   };
 
-  const section = (label, items, addMt, id) => {
+  const section = (label, items, addMt) => {
     if (!items.length) return '';
-    return `<div class="posts-category-section${addMt ? ' mt' : ''}" id="${id}">
-              <div class="posts-category-label">${label} <span class="category-count">共計 ${items.length} 個</span></div>
-              <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>
-            </div>`;
+    return `<div class="posts-category-label${addMt ? ' mt' : ''}">${label}</div>
+            <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
   };
 
   let first = true;
   let html = '';
-  if (both.length) { html += section('雙日應援區', both, false, 'cat-both'); first = false; }
-  if (day1.length) { html += section('7/11 周六場應援區', day1, !first, 'cat-day1'); first = false; }
-  if (day2.length) { html += section('7/12 周日場應援區', day2, !first, 'cat-day2'); }
+  if (both.length) { html += section('雙日應援區', both, false); first = false; }
+  if (day1.length) { html += section('7/13 周一場應援區', day1, !first); first = false; }
+  if (day2.length) { html += section('7/12 周日場應援區', day2, !first); }
 
   grid.innerHTML = html;
 }
@@ -116,41 +81,10 @@ function safe(str) {
   return d.innerHTML;
 }
 
-// ── Nav dropdown ──
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.nav-drop-trigger').forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      const dropdown = trigger.closest('.nav-dropdown');
-      const isOpen = dropdown.classList.contains('open');
-      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-      if (!isOpen) dropdown.classList.add('open');
-    });
-  });
-
-  document.querySelectorAll('.nav-drop-menu a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.nav-dropdown')) {
-      document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
-    }
-  });
-});
-
 // ── Submission form ──
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPosts();
-
-  const searchInput = document.getElementById('post-search');
-  if (searchInput) {
-    searchInput.addEventListener('input', applyPostFilter);
-  }
 
   const form = document.getElementById('submit-form');
   const successMsg = document.getElementById('form-success');
