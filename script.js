@@ -1,18 +1,21 @@
 // ── Posts ──
 
+let _allPosts = [];
+let _activeDay = 'all';
+
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
     const res = await fetch('data/posts.json');
     const data = await res.json();
-
-    renderPosts(data.posts || []);
+    _allPosts = data.posts || [];
+    renderPosts(_allPosts, _activeDay);
   } catch {
     grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
   }
 }
 
-function renderPosts(posts) {
+function renderPosts(posts, dayFilter) {
   const grid = document.getElementById('posts-grid');
 
   if (!posts.length) {
@@ -66,12 +69,23 @@ function renderPosts(posts) {
             <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
   };
 
-  let first = true;
   let html = '';
-  if (both.length) { html += section('雙日應援區', both, false); first = false; }
-  if (day1.length) { html += section('7/13 周一場應援區', day1, !first); first = false; }
-  if (day2.length) { html += section('7/12 周日場應援區', day2, !first); }
+  if (dayFilter === 'both') {
+    html = section('🗓️ 雙日應援區', both, false);
+  } else if (dayFilter === 'day1') {
+    if (both.length) html += section('🗓️ 雙日應援區', both, false);
+    if (day1.length) html += section('📅 7/13 周一場應援區', day1, both.length > 0);
+  } else if (dayFilter === 'day2') {
+    if (both.length) html += section('🗓️ 雙日應援區', both, false);
+    if (day2.length) html += section('📅 7/12 周日場應援區', day2, both.length > 0);
+  } else {
+    let first = true;
+    if (both.length) { html += section('🗓️ 雙日應援區', both, false); first = false; }
+    if (day1.length) { html += section('📅 7/13 周一場應援區', day1, !first); first = false; }
+    if (day2.length) { html += section('📅 7/12 周日場應援區', day2, !first); }
+  }
 
+  if (!html) html = '<div class="no-posts">此日期暫無應援資訊</div>';
   grid.innerHTML = html;
 }
 
@@ -85,6 +99,15 @@ function safe(str) {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadPosts();
+
+  document.getElementById('day-filter')?.addEventListener('click', e => {
+    const btn = e.target.closest('.day-btn');
+    if (!btn) return;
+    document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    _activeDay = btn.dataset.day;
+    renderPosts(_allPosts, _activeDay);
+  });
 
   const form = document.getElementById('submit-form');
   const successMsg = document.getElementById('form-success');
