@@ -9,17 +9,37 @@ async function loadPosts() {
     const res = await fetch('data/posts.json');
     const data = await res.json();
     _allPosts = data.posts || [];
-    renderPosts(_allPosts, _activeDay);
+    applyFilter();
   } catch {
     grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
   }
+}
+
+function applyFilter() {
+  const input = document.getElementById('post-search');
+  const countEl = document.getElementById('post-search-count');
+  const q = (input?.value || '').trim().toLowerCase();
+
+  let filtered = _allPosts;
+  if (q) {
+    filtered = _allPosts.filter(p => {
+      const haystack = [
+        p.username, p.event_name, p.support_items, p.quantity,
+        p.conditions, p.location, p.text, p.event_date, p.distribution_time
+      ].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(q);
+    });
+  }
+
+  if (countEl) countEl.textContent = q ? `找到 ${filtered.length} / ${_allPosts.length} 筆` : '';
+  renderPosts(filtered, _activeDay);
 }
 
 function renderPosts(posts, dayFilter) {
   const grid = document.getElementById('posts-grid');
 
   if (!posts.length) {
-    grid.innerHTML = '<div class="no-posts">目前沒有應援資訊</div>';
+    grid.innerHTML = '<div class="no-posts">目前沒有符合條件的應援資訊</div>';
     return;
   }
 
@@ -33,6 +53,10 @@ function renderPosts(posts, dayFilter) {
     const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
     const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
     const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
+    const urls = Array.isArray(post.urls) && post.urls.length ? post.urls.filter(Boolean) : (post.url ? [post.url] : []);
+    const urlsHtml = urls.map((u, i) =>
+      `<a href="${safe(u)}" target="_blank" rel="noopener" class="post-link">查看原文${urls.length > 1 ? ' ' + (i + 1) : ''} →</a>`
+    ).join('');
     const infoBlock = (post.support_items || post.quantity || post.conditions || post.distribution_time) ? `
         <div class="post-info-block">
           ${post.support_items     ? `<div class="post-info-item"><span class="info-label">🎁 應援物</span>${safe(post.support_items)}</div>` : ''}
@@ -59,7 +83,7 @@ function renderPosts(posts, dayFilter) {
         <div class="post-text-wrap">
           <div class="post-text">${safe(post.text || '').replace(/\n/g, '<br>')}</div>
         </div>
-        ${post.url ? `<a href="${post.url}" target="_blank" rel="noopener" class="post-link">查看原文 →</a>` : ''}
+        ${urlsHtml}
       </div>`;
   };
 
@@ -101,13 +125,17 @@ function safe(str) {
 document.addEventListener('DOMContentLoaded', () => {
   loadPosts();
 
+  // Search
+  document.getElementById('post-search')?.addEventListener('input', applyFilter);
+
+  // Day filter tabs
   document.getElementById('day-filter')?.addEventListener('click', e => {
     const btn = e.target.closest('.day-btn');
     if (!btn) return;
     document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     _activeDay = btn.dataset.day;
-    renderPosts(_allPosts, _activeDay);
+    applyFilter();
   });
 
   // Nav dropdown: toggle on mobile click, close on outside click
@@ -125,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Nav dropdown items: set filter to all, then scroll to section
+  // Nav dropdown items: set filter to all, scroll to section
   document.querySelectorAll('.nav-drop-item').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
@@ -133,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       _activeDay = 'all';
       document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('.day-btn[data-day="all"]')?.classList.add('active');
-      renderPosts(_allPosts, 'all');
+      applyFilter();
       document.querySelectorAll('.nav-dropdown-wrap').forEach(w => w.classList.remove('open'));
       setTimeout(() => {
         document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
