@@ -758,6 +758,12 @@ body {
 .landmark-desc { font-size: 12px; color: var(--muted); }
 .landmark-nav { font-size: 11px; color: var(--purple); margin-top: 8px; font-weight: 600; }
 
+.landmark-card-multi { cursor: default; }
+.landmark-card-multi:hover { border-color: rgba(124,58,237,.45); box-shadow: 0 4px 16px rgba(124,58,237,.12); }
+.landmark-links { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.landmark-links .landmark-nav { margin-top: 0; text-decoration: none; }
+.landmark-links .landmark-nav:hover { text-decoration: underline; }
+
 /* ── SUPPORT PLACEHOLDER ── */
 .support-placeholder {
   background: var(--bg-card);
