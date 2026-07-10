@@ -275,54 +275,71 @@ body {
   background: rgba(124,58,237,.06);
 }
 
-/* ── LANDMARK BANNER ── */
-.landmark-banner {
-  background: var(--gradient);
-  padding: 10px 0;
-  overflow: hidden;
-  position: sticky;
-  top: 50px;
-  z-index: 90;
-}
-
-.landmark-banner-track {
-  display: flex;
-  gap: 10px;
-  padding: 0 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.landmark-banner-track::-webkit-scrollbar { display: none; }
-
-.lm-chip {
-  flex: 0 0 auto;
+/* ── NAV DROPDOWN ── */
+.nav-dropdown-wrap {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: rgba(255,255,255,.92);
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.3);
-  border-radius: 20px;
-  padding: 5px 14px;
-  font-size: 13px;
-  font-weight: 500;
+}
+
+.nav-link-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--muted);
   text-decoration: none;
+  font-size: 13px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all .2s;
   white-space: nowrap;
-  transition: background .2s, color .2s;
 }
 
-.lm-chip:hover {
-  background: rgba(255,255,255,.28);
-  color: #fff;
+.nav-link-main:hover,
+.nav-dropdown-wrap:hover .nav-link-main,
+.nav-dropdown-wrap.open .nav-link-main {
+  color: var(--purple);
+  border-color: rgba(124,58,237,.35);
+  background: rgba(124,58,237,.06);
 }
 
-.lm-chip.highlight {
-  background: rgba(255,255,255,.25);
-  border-color: rgba(255,255,255,.6);
-  color: #fff;
-  font-weight: 600;
+.nav-chevron { font-size: 10px; opacity: .7; }
+
+.nav-drop {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  box-shadow: 0 4px 20px rgba(124,58,237,.12);
+  z-index: 200;
+  min-width: 148px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-dropdown-wrap:hover .nav-drop,
+.nav-dropdown-wrap.open .nav-drop { display: flex; }
+
+.nav-drop-item {
+  padding: 7px 12px;
+  border-radius: 6px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.nav-drop-item:hover {
+  color: var(--purple);
+  background: rgba(124,58,237,.07);
 }
 
 /* ── DAY FILTER ── */
