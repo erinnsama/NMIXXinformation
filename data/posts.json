@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-10T14:17:50.473266+00:00",
+  "last_updated": "2026-07-10T14:23:53.049265+00:00",
   "posts": [
     {
       "id": "community_464151",
@@ -6177,6 +6177,24 @@
       "conditions": "1. 出示粉絲證明（演唱會門票、官方周邊、或 Bubble 訂閱）\n2. 追蹤 NMIXX 任一社群",
       "distribution_time": "7/11、7/12，地點當天公告",
       "contact": "https://www.threads.com/@nswer_y.an/post/DamXDH8DxM6"
+    },
+    {
+      "id": "community_304871",
+      "username": "pancake.404",
+      "text": "這次準備了飄帶鑰匙圈！應援物為免費領取 這次只會去7/12 時間需以當天情況到會場會在發文",
+      "url": "https://www.threads.com/@pancake.404/post/DakSKsXE4ng",
+      "date": "2026/07/10",
+      "source": "community",
+      "venue_type": "venue",
+      "day": "day2",
+      "event_name": "【pancake.404】飄帶鑰匙圈應援",
+      "event_date": "",
+      "location": "演唱會現場（時間當天發文公告）",
+      "support_items": "飄帶鑰匙圈",
+      "quantity": "數量有限，發完為止",
+      "conditions": "任何粉絲證明（泡泡、水母、手燈等），每人限領一份",
+      "distribution_time": "7/12，時間當天公告",
+      "contact": "https://www.threads.com/@pancake.404/post/DakSKsXE4ng"
     }
   ]
 }
