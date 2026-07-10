@@ -43,10 +43,28 @@
     <a href="#submit">應援資訊提交</a>
   </nav>
 
+  <!-- 周邊地標置頂橫幅 -->
+  <div class="landmark-banner">
+    <div class="landmark-banner-track">
+      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=高雄巨蛋" target="_blank" rel="noopener">🎵 高雄巨蛋</a>
+      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=漢神巨蛋+高雄左營" target="_blank" rel="noopener">🛍️ 漢神巨蛋</a>
+      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=瑞豐夜市+高雄" target="_blank" rel="noopener">🌙 瑞豐夜市</a>
+      <a class="lm-chip" href="https://www.google.com/maps/search/?api=1&query=高鐵左營站" target="_blank" rel="noopener">🚄 高鐵左營站</a>
+      <a class="lm-chip highlight" href="https://www.google.com/maps/search/?api=1&query=洋洋本屋+高雄左營" target="_blank" rel="noopener">🎪 NMIXX應援展覽</a>
+      <a class="lm-chip highlight" href="https://www.google.com/maps/search/?api=1&query=AILAV+高雄" target="_blank" rel="noopener">🍽️ AILAV</a>
+    </div>
+  </div>
+
   <!-- Fan Support Posts -->
   <section class="section" id="fan-support">
     <div class="container">
       <h2 class="section-title">📣 高雄場應援資訊</h2>
+      <div class="day-filter" id="day-filter">
+        <button class="day-btn active" data-day="all">全部</button>
+        <button class="day-btn" data-day="both">🗓️ 雙日</button>
+        <button class="day-btn" data-day="day1">📅 7/13（一）</button>
+        <button class="day-btn" data-day="day2">📅 7/12（日）</button>
+      </div>
       <div class="posts-grid" id="posts-grid">
         <div class="loading">載入中⋯</div>
       </div>
@@ -136,6 +154,18 @@
           <div class="landmark-icon">🌙</div>
           <div class="landmark-name">瑞豐夜市</div>
           <div class="landmark-desc">週五六日開市・步行可達</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=洋洋本屋+高雄左營" target="_blank" rel="noopener">
+          <div class="landmark-icon">🎪</div>
+          <div class="landmark-name">NMIXX應援展覽</div>
+          <div class="landmark-desc">洋洋本屋 · 粉絲應援展</div>
+          <div class="landmark-nav">Google Maps 導航 ↗</div>
+        </a>
+        <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=AILAV+高雄" target="_blank" rel="noopener">
+          <div class="landmark-icon">🍽️</div>
+          <div class="landmark-name">AILAV</div>
+          <div class="landmark-desc">週邊餐廳</div>
           <div class="landmark-nav">Google Maps 導航 ↗</div>
         </a>
       </div>
