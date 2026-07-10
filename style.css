@@ -342,6 +342,42 @@ body {
   background: rgba(124,58,237,.07);
 }
 
+/* ── SEARCH ── */
+.post-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.post-search {
+  flex: 1;
+  min-width: 220px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 16px;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.post-search::placeholder { color: var(--muted); }
+
+.post-search:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 2px rgba(124,58,237,.15);
+}
+
+.post-search-count {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 /* ── DAY FILTER ── */
 .day-filter {
   display: flex;
