@@ -63,26 +63,27 @@ function renderPosts(posts, dayFilter) {
       </div>`;
   };
 
-  const section = (label, items, addMt) => {
+  const section = (label, items, addMt, id) => {
     if (!items.length) return '';
-    return `<div class="posts-category-label${addMt ? ' mt' : ''}">${label}</div>
+    const idAttr = id ? ` id="${id}"` : '';
+    return `<div class="posts-category-label${addMt ? ' mt' : ''}"${idAttr}>${label}</div>
             <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
   };
 
   let html = '';
   if (dayFilter === 'both') {
-    html = section('🗓️ 雙日應援區', both, false);
+    html = section('🗓️ 雙日應援區', both, false, 'section-both');
   } else if (dayFilter === 'day1') {
-    if (both.length) html += section('🗓️ 雙日應援區', both, false);
-    if (day1.length) html += section('📅 7/13 周一場應援區', day1, both.length > 0);
+    if (both.length) html += section('🗓️ 雙日應援區', both, false, 'section-both');
+    if (day1.length) html += section('📅 7/13 周一場應援區', day1, both.length > 0, 'section-day1');
   } else if (dayFilter === 'day2') {
-    if (both.length) html += section('🗓️ 雙日應援區', both, false);
-    if (day2.length) html += section('📅 7/12 周日場應援區', day2, both.length > 0);
+    if (both.length) html += section('🗓️ 雙日應援區', both, false, 'section-both');
+    if (day2.length) html += section('📅 7/12 周日場應援區', day2, both.length > 0, 'section-day2');
   } else {
     let first = true;
-    if (both.length) { html += section('🗓️ 雙日應援區', both, false); first = false; }
-    if (day1.length) { html += section('📅 7/13 周一場應援區', day1, !first); first = false; }
-    if (day2.length) { html += section('📅 7/12 周日場應援區', day2, !first); }
+    if (both.length) { html += section('🗓️ 雙日應援區', both, false, 'section-both'); first = false; }
+    if (day1.length) { html += section('📅 7/13 周一場應援區', day1, !first, 'section-day1'); first = false; }
+    if (day2.length) { html += section('📅 7/12 周日場應援區', day2, !first, 'section-day2'); }
   }
 
   if (!html) html = '<div class="no-posts">此日期暫無應援資訊</div>';
@@ -107,6 +108,37 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.add('active');
     _activeDay = btn.dataset.day;
     renderPosts(_allPosts, _activeDay);
+  });
+
+  // Nav dropdown: toggle on mobile click, close on outside click
+  document.querySelectorAll('.nav-dropdown-wrap').forEach(wrap => {
+    wrap.querySelector('.nav-link-main')?.addEventListener('click', e => {
+      if (window.innerWidth < 900) {
+        e.preventDefault();
+        wrap.classList.toggle('open');
+      }
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-dropdown-wrap')) {
+      document.querySelectorAll('.nav-dropdown-wrap').forEach(w => w.classList.remove('open'));
+    }
+  });
+
+  // Nav dropdown items: set filter to all, then scroll to section
+  document.querySelectorAll('.nav-drop-item').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = a.dataset.section;
+      _activeDay = 'all';
+      document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.day-btn[data-day="all"]')?.classList.add('active');
+      renderPosts(_allPosts, 'all');
+      document.querySelectorAll('.nav-dropdown-wrap').forEach(w => w.classList.remove('open'));
+      setTimeout(() => {
+        document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 60);
+    });
   });
 
   const form = document.getElementById('submit-form');
