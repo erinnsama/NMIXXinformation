@@ -98,11 +98,9 @@ function renderPosts(posts, dayFilter) {
   if (dayFilter === 'both') {
     html = section('🗓️ 雙日應援區', both, false, 'section-both');
   } else if (dayFilter === 'day1') {
-    if (both.length) html += section('🗓️ 雙日應援區', both, false, 'section-both');
-    if (day1.length) html += section('📅 7/13 周一場應援區', day1, both.length > 0, 'section-day1');
+    html = section('📅 7/13 周一場應援區', day1, false, 'section-day1');
   } else if (dayFilter === 'day2') {
-    if (both.length) html += section('🗓️ 雙日應援區', both, false, 'section-both');
-    if (day2.length) html += section('📅 7/12 周日場應援區', day2, both.length > 0, 'section-day2');
+    html = section('📅 7/12 周日場應援區', day2, false, 'section-day2');
   } else {
     let first = true;
     if (both.length) { html += section('🗓️ 雙日應援區', both, false, 'section-both'); first = false; }
