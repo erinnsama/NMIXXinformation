@@ -87,7 +87,7 @@
     {
       "id": "community_204859",
       "username": "_rong_0724",
-      "text": "明天我將會在高雄巨蛋發NMIXX的專輯作為應援🔥\n位置在星巴克前面的地方\n明天會再發文做確認（7/12）\n數量查看原文",
+      "text": "明天我將會在高雄巨蛋發NMIXX的專輯作為應援🔥\n位置在星巴克前面的地方\n明天會再發文做確認\n數量查看原文",
       "url": "https://www.threads.com/@_rong_0724/post/Dao_7UqiVjL",
       "date": "2026/07/11",
       "source": "community",
@@ -100,7 +100,10 @@
       "quantity": "查看原文",
       "conditions": "未提及",
       "distribution_time": "7/12，確切時間明天再發文確認",
-      "contact": "https://www.threads.com/@_rong_0724/post/Dao_7UqiVjL"
+      "contact": "https://www.threads.com/@_rong_0724/post/Dao_7UqiVjL",
+      "urls": [
+        "https://www.threads.com/@_rong_0724/post/Dao_7UqiVjL"
+      ]
     }
   ]
 }
