@@ -6,7 +6,7 @@ let _activeDay = 'all';
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
-    const res = await fetch('data/posts.json');
+    const res = await fetch('/data/posts.json');
     const data = await res.json();
     _allPosts = data.posts || [];
     applyFilter();
