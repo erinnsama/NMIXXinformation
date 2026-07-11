@@ -365,8 +365,8 @@
     <div class="edit-field">
       <label>演唱日期</label>
       <select id="ef-day">
-        <option value="both">雙日（7/11 + 7/12）</option>
-        <option value="day1">7/11 周六場</option>
+        <option value="both">雙日（7/13 + 7/12）</option>
+        <option value="day1">7/13 周一場</option>
         <option value="day2">7/12 周日場</option>
       </select>
     </div>
@@ -414,7 +414,7 @@
   let allPosts = [];
   let allPending = [];
 
-  const DAY_LABEL = { both: '雙日', day1: '7/11 周六', day2: '7/12 周日' };
+  const DAY_LABEL = { both: '雙日', day1: '7/13 周一', day2: '7/12 周日' };
 
   async function loadAll() {
     await Promise.all([loadPending(), loadPosts()]);
