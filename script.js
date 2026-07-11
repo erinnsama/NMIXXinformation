@@ -6,12 +6,13 @@ let _activeDay = 'all';
 async function loadPosts() {
   const grid = document.getElementById('posts-grid');
   try {
-    const res = await fetch('/data/posts.json');
+    const res = await fetch('/data/posts.json?t=' + Date.now());
     const data = await res.json();
     _allPosts = data.posts || [];
     applyFilter();
-  } catch {
-    grid.innerHTML = '<div class="no-posts">尚無資料，請點擊「更新資料」載入最新應援資訊</div>';
+  } catch (err) {
+    console.error('[loadPosts error]', err);
+    grid.innerHTML = `<div class="no-posts">載入失敗：${err.message || err}，請重新整理頁面</div>`;
   }
 }
 
