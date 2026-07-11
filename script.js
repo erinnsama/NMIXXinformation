@@ -90,7 +90,7 @@ function renderPosts(posts, dayFilter) {
   const section = (label, items, addMt, id) => {
     if (!items.length) return '';
     const idAttr = id ? ` id="${id}"` : '';
-    return `<div class="posts-category-label${addMt ? ' mt' : ''}"${idAttr}>${label}</div>
+    return `<div class="posts-category-label${addMt ? ' mt' : ''}"${idAttr}>${label}<span class="category-count">${items.length} 篇</span></div>
             <div class="posts-grid-inner">${items.map(cardHtml).join('')}</div>`;
   };
 
