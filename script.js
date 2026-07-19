@@ -46,6 +46,32 @@ const DEFAULT_EVENT = 'taipei';
 let _allPosts = [];
 let _activeEvent = DEFAULT_EVENT;
 let _activeDay = 'all';
+let _favoritesOnly = false;
+
+// ── Favorites (localStorage per browser) ──
+const FAV_KEY = 'nmixx_favorites';
+function getFavorites() {
+  try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function setFavorites(set) {
+  localStorage.setItem(FAV_KEY, JSON.stringify([...set]));
+}
+function isFavorite(postId) {
+  return getFavorites().has(postId);
+}
+function toggleFavorite(postId) {
+  const favs = getFavorites();
+  if (favs.has(postId)) favs.delete(postId);
+  else favs.add(postId);
+  setFavorites(favs);
+  return favs.has(postId);
+}
+function updateFavCount() {
+  const total = getFavorites().size;
+  const el = document.getElementById('fav-count');
+  if (el) el.textContent = total;
+}
 
 // ── Data loading ──
 async function loadPosts() {
@@ -72,6 +98,11 @@ function applyFilter() {
   const q = (input?.value || '').trim().toLowerCase();
 
   let scoped = _allPosts.filter(p => postEvent(p) === _activeEvent);
+
+  if (_favoritesOnly) {
+    const favs = getFavorites();
+    scoped = scoped.filter(p => favs.has(p.id));
+  }
 
   let filtered = scoped;
   if (q) {
@@ -116,8 +147,10 @@ function renderPosts(posts, dayFilter) {
           ${post.conditions        ? `<div class="post-info-item"><span class="info-label">📋 條件</span><span>${safe(post.conditions).replace(/\n/g, '<br>')}</span></div>` : ''}
           ${post.distribution_time ? `<div class="post-info-item"><span class="info-label">⏰ 發放時間</span>${safe(post.distribution_time)}</div>` : ''}
         </div>` : '';
+    const fav = isFavorite(post.id);
     return `
       <div class="post-card">
+        <button class="post-fav-btn${fav ? ' active' : ''}" data-id="${safe(post.id)}" aria-label="收藏">${fav ? '❤️' : '🤍'}</button>
         <div class="post-card-tags">
           <span class="post-tag ${isCommunity ? 'community' : ''}">${isCommunity ? '✍️ 手動更新' : '🔍 Threads'}</span>
           <span class="post-tag venue-tag">${venueLabel}</span>
@@ -252,9 +285,31 @@ document.addEventListener('DOMContentLoaded', () => {
   switchEvent(DEFAULT_EVENT);
 
   loadPosts();
+  updateFavCount();
 
   // Search
   document.getElementById('post-search')?.addEventListener('input', applyFilter);
+
+  // Favorites filter toggle
+  document.getElementById('fav-filter-btn')?.addEventListener('click', () => {
+    _favoritesOnly = !_favoritesOnly;
+    document.getElementById('fav-filter-btn')?.classList.toggle('active', _favoritesOnly);
+    applyFilter();
+  });
+
+  // Heart click on any post card (delegated)
+  document.getElementById('posts-grid')?.addEventListener('click', e => {
+    const btn = e.target.closest('.post-fav-btn');
+    if (!btn) return;
+    e.preventDefault();
+    const id = btn.dataset.id;
+    if (!id) return;
+    const nowFav = toggleFavorite(id);
+    btn.classList.toggle('active', nowFav);
+    btn.textContent = nowFav ? '❤️' : '🤍';
+    updateFavCount();
+    if (_favoritesOnly) applyFilter();
+  });
 
   // Event tabs
   document.getElementById('event-tabs')?.addEventListener('click', e => {
