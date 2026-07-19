@@ -5,6 +5,8 @@ const EVENTS = {
     label: '高雄場',
     status: 'ended',
     statusText: '已結束',
+    tourBadge: '1ST WORLD TOUR',
+    subtitle: 'EPISODE 1 : ZERO FRONTIER',
     location: 'In Kaohsiung',
     venue: '高雄巨蛋',
     dateBadges: ['7 / 13 (一)', '7 / 12 (日)'],
@@ -25,6 +27,8 @@ const EVENTS = {
     label: '台北場',
     status: 'active',
     statusText: '🔴 進行中',
+    tourBadge: 'GUEST APPEARANCE',
+    subtitle: '味全龍棒球賽・賽後嘉賓表演',
     location: 'In Taipei',
     venue: '台北大巨蛋',
     dateBadges: ['8 / 15 (五)'],
@@ -181,7 +185,15 @@ function switchEvent(eventKey) {
     el.classList.toggle('active', el.dataset.event === eventKey);
   });
 
-  // Hero: location + venue + dates
+  // Hero: tour badge + subtitle + location + venue + dates
+  const heroTourBadge = document.querySelector('.hero-wordmark .tour-badge');
+  if (heroTourBadge) heroTourBadge.textContent = cfg.tourBadge;
+  const heroSubtitle = document.querySelector('.hero-wordmark h2');
+  if (heroSubtitle) {
+    heroSubtitle.textContent = cfg.subtitle;
+    // Chinese subtitle needs tighter letter-spacing than default (7px is for uppercase English)
+    heroSubtitle.classList.toggle('subtitle-cjk', /[㐀-鿿]/.test(cfg.subtitle));
+  }
   const heroLocation = document.querySelector('.hero-wordmark .location');
   if (heroLocation) heroLocation.textContent = cfg.location;
   const heroVenue = document.querySelector('.hero-content .venue');

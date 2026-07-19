@@ -132,6 +132,10 @@ body {
   color: rgba(255,255,255,.65);
   margin-top: 10px;
 }
+.hero h2.subtitle-cjk {
+  font-size: clamp(11px, 2vw, 15px);
+  letter-spacing: 3px;
+}
 
 /* location is inside hero-wordmark — on the dark top area */
 .hero-wordmark .location {
