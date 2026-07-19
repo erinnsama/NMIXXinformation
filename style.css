@@ -759,6 +759,31 @@ body {
   line-height: 1.6;
 }
 
+.parking-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+.parking-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--purple);
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(124, 58, 237, .04);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.parking-link:hover {
+  border-color: var(--purple);
+  background: rgba(124, 58, 237, .1);
+  transform: translateX(2px);
+}
+
 /* ── TRANSPORT SUBSECTION LABELS ── */
 .transport-sub-label {
   font-size: 11px;
