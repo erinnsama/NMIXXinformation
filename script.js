@@ -100,7 +100,9 @@ function renderPosts(posts, dayFilter) {
   const cardHtml = post => {
     const initial = post.username ? post.username[0].toUpperCase() : '?';
     const isCommunity = post.source === 'community';
-    const venueLabel = post.venue_type === 'offsite' ? '🏪 非現場' : '🎤 演唱會現場';
+    const venueLabel = post.venue_type === 'offsite'
+      ? '🏪 非現場'
+      : (post.event === 'taipei' ? '🏟️ 大巨蛋周圍' : '🎤 演唱會現場');
     const eventDate = post.event_date ? `<span class="post-event-date">📅 ${safe(post.event_date)}</span>` : '';
     const location = post.location ? `<div class="post-location">📍 ${safe(post.location)}</div>` : '';
     const urls = Array.isArray(post.urls) && post.urls.length ? post.urls.filter(Boolean) : (post.url ? [post.url] : []);

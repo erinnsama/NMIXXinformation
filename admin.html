@@ -469,7 +469,7 @@
             <span class="tag community">✍️ 投稿</span>
             <span class="tag event-tag">${EVENT_LABEL[p.event || 'kaohsiung'] || p.event}</span>
             ${p.day ? `<span class="tag day-tag">📅 ${DAY_LABEL[p.day] || p.day}</span>` : ''}
-            ${p.venue_type ? `<span class="tag">${p.venue_type === 'offsite' ? '🏪非現場(有指定地點)' : '🎤演唱會現場'}</span>` : ''}
+            ${p.venue_type ? `<span class="tag">${p.venue_type === 'offsite' ? '🏪非現場(有指定地點)' : (p.event === 'taipei' ? '🏟️大巨蛋周圍' : '🎤演唱會現場')}</span>` : ''}
             <span class="username">@${esc(p.username || '—')}</span>
             <span class="post-date">${esc(p.date || '')}</span>
           </div>
