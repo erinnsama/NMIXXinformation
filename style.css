@@ -136,6 +136,7 @@ body {
   font-size: clamp(11px, 2vw, 15px);
   letter-spacing: 3px;
 }
+.tour-badge:empty { display: none; }
 
 /* location is inside hero-wordmark — on the dark top area */
 .hero-wordmark .location {
@@ -1038,6 +1039,7 @@ body {
 .note-icon { font-size: 22px; flex-shrink: 0; }
 
 .note-item strong { display: block; font-size: 14px; margin-bottom: 4px; color: var(--text); }
+.note-item p strong { display: inline; font-size: inherit; margin-bottom: 0; color: inherit; }
 .note-item p { font-size: 13px; color: var(--muted); }
 
 /* ── FORM ── */
