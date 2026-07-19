@@ -96,6 +96,9 @@
     .stat-num { font-size: 28px; font-weight: 800; color: var(--purple); }
     .stat.pending-stat .stat-num { color: var(--pink); }
     .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 1px; }
+    .stat-breakdown { display: flex; gap: 6px; margin-top: 8px; font-size: 10px; color: var(--muted); flex-wrap: wrap; }
+    .stat-breakdown span { padding: 2px 6px; border-radius: 4px; background: rgba(184,110,245,.08); }
+    .stat-breakdown b { color: var(--text); font-weight: 700; }
 
     .section-label {
       font-size: 11px;
@@ -328,14 +331,26 @@
     <div class="stat pending-stat">
       <div class="stat-num" id="count-pending">0</div>
       <div class="stat-label">⏳ 待審核</div>
+      <div class="stat-breakdown">
+        <span>🏟️ 8月台北 <b id="count-pending-taipei">0</b></span>
+        <span>🎤 7月高雄 <b id="count-pending-kaohsiung">0</b></span>
+      </div>
     </div>
     <div class="stat">
       <div class="stat-num" id="count-all">0</div>
       <div class="stat-label">已發布</div>
+      <div class="stat-breakdown">
+        <span>🏟️ 8月台北 <b id="count-all-taipei">0</b></span>
+        <span>🎤 7月高雄 <b id="count-all-kaohsiung">0</b></span>
+      </div>
     </div>
     <div class="stat">
       <div class="stat-num" id="count-community">0</div>
       <div class="stat-label">手動更新</div>
+      <div class="stat-breakdown">
+        <span>🏟️ 8月台北 <b id="count-community-taipei">0</b></span>
+        <span>🎤 7月高雄 <b id="count-community-kaohsiung">0</b></span>
+      </div>
     </div>
   </div>
 
@@ -425,6 +440,16 @@
   const DAY_LABEL = { both: '雙日', day1: '7/13 周一', day2: '7/12 周日', day3: '8/15 賽後演唱' };
   const EVENT_LABEL = { kaohsiung: '🏟️ 高雄', taipei: '🏟️ 台北' };
 
+  // Legacy posts without event field → treat as kaohsiung
+  function postEvent(p) { return p.event || 'kaohsiung'; }
+  function countByEvent(list, extraFilter) {
+    const source = extraFilter ? list.filter(extraFilter) : list;
+    return {
+      taipei: source.filter(p => postEvent(p) === 'taipei').length,
+      kaohsiung: source.filter(p => postEvent(p) === 'kaohsiung').length,
+    };
+  }
+
   async function loadAll() {
     await Promise.all([loadPending(), loadPosts()]);
   }
@@ -438,6 +463,9 @@
       allPending = [];
     }
     document.getElementById('count-pending').textContent = allPending.length;
+    const pB = countByEvent(allPending);
+    document.getElementById('count-pending-taipei').textContent = pB.taipei;
+    document.getElementById('count-pending-kaohsiung').textContent = pB.kaohsiung;
     renderPending();
   }
 
@@ -453,6 +481,12 @@
 
     document.getElementById('count-all').textContent = allPosts.length;
     document.getElementById('count-community').textContent = allPosts.filter(p => p.source === 'community').length;
+    const aB = countByEvent(allPosts);
+    document.getElementById('count-all-taipei').textContent = aB.taipei;
+    document.getElementById('count-all-kaohsiung').textContent = aB.kaohsiung;
+    const cB = countByEvent(allPosts, p => p.source === 'community');
+    document.getElementById('count-community-taipei').textContent = cB.taipei;
+    document.getElementById('count-community-kaohsiung').textContent = cB.kaohsiung;
     renderList();
   }
 
