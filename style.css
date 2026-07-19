@@ -342,6 +342,20 @@ body {
   background: rgba(124,58,237,.07);
 }
 
+/* ── EVENT-SPECIFIC CONTENT ── */
+.event-content { display: none; }
+.event-content.active { display: block; }
+.event-placeholder {
+  background: var(--bg-card);
+  border: 2px dashed var(--border);
+  border-radius: 14px;
+  padding: 36px 24px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
 /* ── EVENT TABS ── */
 .event-tabs {
   display: flex;

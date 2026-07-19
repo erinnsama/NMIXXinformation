@@ -176,6 +176,11 @@ function switchEvent(eventKey) {
     t.classList.toggle('active', t.dataset.event === eventKey);
   });
 
+  // Toggle event-specific content sections (transport, union, notes, etc.)
+  document.querySelectorAll('.event-content').forEach(el => {
+    el.classList.toggle('active', el.dataset.event === eventKey);
+  });
+
   // Hero: location + venue + dates
   const heroLocation = document.querySelector('.hero-wordmark .location');
   if (heroLocation) heroLocation.textContent = cfg.location;
@@ -252,6 +257,16 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.add('active');
     _activeDay = btn.dataset.day;
     applyFilter();
+  });
+
+  // Nav data-scroll-to: scroll to matching data-anchor within the currently visible event-content
+  document.querySelectorAll('[data-scroll-to]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const key = a.dataset.scrollTo;
+      const target = document.querySelector(`.event-content.active [data-anchor="${key}"]`);
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   });
 
   // Nav dropdown: toggle on mobile click, close on outside click

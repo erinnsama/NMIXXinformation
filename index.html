@@ -37,7 +37,7 @@
       <a href="#fan-support" class="nav-link-main">應援資訊 <span class="nav-chevron">▾</span></a>
       <div class="nav-drop"><!-- items populated by JS per active event --></div>
     </div>
-    <a href="#landmarks">周邊地標</a>
+    <a href="#" data-scroll-to="landmarks">周邊地標</a>
     <a href="#transport">交通指南</a>
     <a href="#union">聯應團隊資訊同步區</a>
     <a href="#notes">注意事項</a>
@@ -75,6 +75,7 @@
   <section class="section section-alt" id="transport">
     <div class="container">
       <h2 class="section-title">🚄 交通指南</h2>
+      <div class="event-content" data-event="kaohsiung">
       <div class="transport-header">
         <div class="route-display">
           <span class="route-node">高鐵左營站</span>
@@ -130,7 +131,7 @@
         ></iframe>
       </div>
 
-      <div class="transport-sub-label" id="landmarks">周邊地標</div>
+      <div class="transport-sub-label" data-anchor="landmarks">周邊地標</div>
       <div class="landmark-grid">
         <a class="landmark-card" href="https://www.google.com/maps/search/?api=1&query=高鐵左營站" target="_blank" rel="noopener">
           <div class="landmark-icon">🚄</div>
@@ -194,6 +195,11 @@
         <div class="legend-item"><span class="legend-dot" style="background:#22c55e"></span> 212–215・北側（靠近漢神巨蛋）</div>
         <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span> 217–221・西側（新榮街側）</div>
       </div>
+      </div><!-- /event-content kaohsiung -->
+
+      <div class="event-content" data-event="taipei">
+        <div class="event-placeholder">🚧 台北場（8/15 台北大巨蛋）交通指南、周邊地標、路線地圖等尚未整理，敬請期待～</div>
+      </div>
     </div>
   </section>
 
@@ -206,6 +212,7 @@
           <h2 class="union-title">臺灣聯合應援團隊<br>資訊專區</h2>
         </div>
       </div>
+      <div class="event-content" data-event="kaohsiung">
       <div class="union-posts">
         <a class="union-post-row" href="https://www.threads.com/@runfornmixx_tw/post/Dann2p-lM84?xmt=AQG0DzamvPWF8Ku7eMybqsqY8Z99YvmVoSejJVNtZRdoRYPeIoIS3EomB8KtZhV-po2W_L0" target="_blank" rel="noopener">
           <span class="union-post-text">⚓️【Run For NMIXX 應援統整公告】⚓️</span>
@@ -250,6 +257,11 @@
           <span class="union-post-arrow">↗</span>
         </a>
       </div>
+      </div><!-- /event-content kaohsiung -->
+
+      <div class="event-content" data-event="taipei">
+        <div class="event-placeholder">🚧 台北場聯應團隊資訊尚未整理，敬請期待～</div>
+      </div>
     </div>
   </section>
 
@@ -257,6 +269,7 @@
   <section class="section section-alt" id="notes">
     <div class="container">
       <h2 class="section-title">📋 演唱會注意事項</h2>
+      <div class="event-content" data-event="kaohsiung">
       <div class="notes-list">
         <div class="note-item">
           <span class="note-icon">🌀</span>
@@ -286,6 +299,11 @@
             <p>出門前請再三確認票已帶好！</p>
           </div>
         </div>
+      </div>
+      </div><!-- /event-content kaohsiung -->
+
+      <div class="event-content" data-event="taipei">
+        <div class="event-placeholder">🚧 台北場注意事項尚未整理，敬請期待～</div>
       </div>
     </div>
   </section>
