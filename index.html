@@ -313,7 +313,9 @@
     <div class="container">
       <h2 class="section-title">📨 提交應援資訊</h2>
       <p class="section-desc">如果你也有舉辦應援活動，歡迎提交讓更多人知道！</p>
-      <form class="submit-form" id="submit-form">
+
+      <div class="event-content" data-event="kaohsiung">
+      <form class="submit-form">
         <div class="form-row">
           <div class="form-group">
             <label>主辦人 / 帳號 <span class="required">*</span></label>
@@ -387,8 +389,71 @@
           <input type="text" name="contact" placeholder="Threads 貼文連結或聯絡帳號">
         </div>
         <button type="submit" class="submit-btn">提交應援資訊</button>
-        <div class="form-success" id="form-success">✅ 已送出！管理員審核後即會公開，感謝你的提交 🩷</div>
+        <div class="form-success">✅ 已送出！管理員審核後即會公開，感謝你的提交 🩷</div>
       </form>
+      </div><!-- /event-content kaohsiung -->
+
+      <div class="event-content" data-event="taipei">
+      <form class="submit-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>主辦人 / 帳號 <span class="required">*</span></label>
+            <input type="text" name="organizer" placeholder="你的 Threads / IG 帳號" required>
+          </div>
+          <div class="form-group">
+            <label>日期 <span class="required">*</span></label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="day" value="both" checked required>
+                <span>📅 8/15（五）</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>主辦人名稱 <span class="required">*</span></label>
+          <input type="text" name="event_name" placeholder="你的追星小名或稱呼" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>應援物 <span class="required">*</span></label>
+            <input type="text" name="support_items" placeholder="例：壓克力吊飾、貼紙" required>
+          </div>
+          <div class="form-group">
+            <label>數量 <span class="required">*</span></label>
+            <input type="text" name="quantity" placeholder="例：100 個" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>領取條件 <span class="required">*</span></label>
+          <textarea name="conditions" placeholder="例：&#10;1. NMIXX 泡泡訂閱（出示）&#10;2. NMIXX 會員（出示）" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>活動地點 <span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="location" value="大巨蛋周圍或館內發放" checked required>
+              <span>🏟️ 大巨蛋周圍或館內發放</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="location" value="__other__">
+              <span>📍 其他（請填寫下方）</span>
+            </label>
+          </div>
+          <input type="text" name="location_other" placeholder="其他地點（選「其他」時填寫）" style="margin-top:8px">
+        </div>
+        <div class="form-group">
+          <label>詳細說明</label>
+          <textarea name="description" placeholder="應援內容、領取方式、時間等⋯" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>聯絡方式 / 原文連結</label>
+          <input type="text" name="contact" placeholder="Threads 貼文連結或聯絡帳號">
+        </div>
+        <button type="submit" class="submit-btn">提交應援資訊</button>
+        <div class="form-success">✅ 已送出！管理員審核後即會公開，感謝你的提交 🩷</div>
+      </form>
+      </div><!-- /event-content taipei -->
     </div>
   </section>
 

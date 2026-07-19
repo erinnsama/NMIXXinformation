@@ -284,39 +284,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const form = document.getElementById('submit-form');
-  const successMsg = document.getElementById('form-success');
-  if (!form) return;
+  // Bind ALL submit forms (kaohsiung + taipei have separate forms)
+  document.querySelectorAll('.submit-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('.submit-btn');
+      const successMsg = form.querySelector('.form-success');
+      btn.textContent = '送出中⋯';
+      btn.disabled = true;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('.submit-btn');
-    btn.textContent = '送出中⋯';
-    btn.disabled = true;
+      const raw = new FormData(form);
+      const payload = Object.fromEntries([...raw.entries()].filter(([k]) => k !== 'access_key'));
 
-    const raw = new FormData(form);
-    const payload = Object.fromEntries([...raw.entries()].filter(([k]) => k !== 'access_key'));
-    // Default new public submissions to current active event
-    if (!payload.event) payload.event = _activeEvent;
-    try {
-      const res = await fetch('/api/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      let json;
-      try { json = await res.json(); } catch { json = {}; }
-      if (json.success) {
-        successMsg.style.display = 'block';
-        form.reset();
-      } else {
-        alert('送出失敗 (HTTP ' + res.status + ')：' + (json.error || '請稍後再試'));
+      // Taipei form: location radio has "__other__" sentinel — replace with location_other text
+      if (payload.location === '__other__') {
+        payload.location = (payload.location_other || '').trim();
       }
-    } catch (err) {
-      alert('連線錯誤：' + err.message);
-    } finally {
-      btn.textContent = '提交應援資訊';
-      btn.disabled = false;
-    }
+      delete payload.location_other;
+
+      // Default event: use the event of the .event-content wrapper this form is in, else active
+      if (!payload.event) {
+        const wrapper = form.closest('.event-content');
+        payload.event = wrapper?.dataset.event || _activeEvent;
+      }
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        let json;
+        try { json = await res.json(); } catch { json = {}; }
+        if (json.success) {
+          if (successMsg) successMsg.style.display = 'block';
+          form.reset();
+        } else {
+          alert('送出失敗 (HTTP ' + res.status + ')：' + (json.error || '請稍後再試'));
+        }
+      } catch (err) {
+        alert('連線錯誤：' + err.message);
+      } finally {
+        btn.textContent = '提交應援資訊';
+        btn.disabled = false;
+      }
+    });
   });
 });
