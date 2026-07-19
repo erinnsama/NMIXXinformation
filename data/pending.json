@@ -1,22 +1,3 @@
 {
-  "pending": [
-    {
-      "id": "community_425081",
-      "username": "_lemonadefish_",
-      "text": "明信片 明天打算隨緣發一發",
-      "url": "https://www.threads.com/@_lemonadefish_/post/Dami3wek7g0",
-      "date": "2026/07/10",
-      "source": "community",
-      "venue_type": "venue",
-      "day": "day1",
-      "event_name": "【魚檸】明信片應援",
-      "event_date": "",
-      "location": "演唱會現場（隨意走動）",
-      "support_items": "明信片",
-      "quantity": "查看原文",
-      "conditions": "未提及",
-      "distribution_time": "7/11，隨緣發放",
-      "contact": "https://www.threads.com/@_lemonadefish_/post/Dami3wek7g0"
-    }
-  ]
+  "pending": []
 }
