@@ -377,6 +377,13 @@
         <option value="offsite">🏪 非現場</option>
       </select>
     </div>
+    <div class="edit-field">
+      <label>場次</label>
+      <select id="ef-event">
+        <option value="taipei">台北場 (8/15)</option>
+        <option value="kaohsiung">高雄場 (7/13-12)</option>
+      </select>
+    </div>
     <div class="edit-modal-actions">
       <button class="edit-save-btn" id="edit-save-btn" onclick="saveEdit()">儲存</button>
       <button class="edit-cancel-btn" onclick="closeEdit()">取消</button>
@@ -415,6 +422,7 @@
   let allPending = [];
 
   const DAY_LABEL = { both: '雙日', day1: '7/13 周一', day2: '7/12 周日' };
+  const EVENT_LABEL = { kaohsiung: '🏟️ 高雄', taipei: '🏟️ 台北' };
 
   async function loadAll() {
     await Promise.all([loadPending(), loadPosts()]);
@@ -458,6 +466,7 @@
         <div class="post-info">
           <div class="post-meta">
             <span class="tag community">✍️ 投稿</span>
+            <span class="tag event-tag">${EVENT_LABEL[p.event || 'kaohsiung'] || p.event}</span>
             ${p.day ? `<span class="tag day-tag">📅 ${DAY_LABEL[p.day] || p.day}</span>` : ''}
             ${p.venue_type ? `<span class="tag">${p.venue_type === 'offsite' ? '🏪非現場(有指定地點)' : '🎤演唱會現場'}</span>` : ''}
             <span class="username">@${esc(p.username || '—')}</span>
@@ -586,11 +595,14 @@
     const post = target === 'pending' ? allPending[i] : allPosts[i];
     if (!post) return;
     editTarget = { index: i, target, id: post.id };
-    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type'];
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type','event'];
     fields.forEach(f => {
       const el = document.getElementById('ef-' + f);
       if (!el) return;
-      const v = String(post[f] ?? '');
+      // Legacy posts without event field → default to kaohsiung
+      let raw = post[f];
+      if (f === 'event' && (raw == null || raw === '')) raw = 'kaohsiung';
+      const v = String(raw ?? '');
       if (el.tagName === 'SELECT') {
         const idx = Array.from(el.options).findIndex(o => o.value === v);
         el.selectedIndex = idx >= 0 ? idx : 0;
@@ -616,7 +628,7 @@
     btn.textContent = '儲存中⋯';
     btn.disabled = true;
 
-    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type'];
+    const fields = ['event_name','support_items','quantity','conditions','distribution_time','location','text','day','venue_type','event'];
     const updates = {};
     fields.forEach(f => { updates[f] = document.getElementById('ef-' + f).value; });
     const urls = [

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NMIXX ZERO FRONTIER in 高雄 應援資訊</title>
+  <title>NMIXX ZERO FRONTIER 台灣應援資訊</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,13 +23,10 @@
       <div class="location">In Kaohsiung</div>
     </div>
 
-    <!-- 日期區（恆在底部） -->
+    <!-- 日期區（恆在底部，內容由 JS 依當前選定場次動態填入） -->
     <div class="hero-content">
-      <div class="dates">
-        <span class="date-badge">7 / 13 (一)</span>
-        <span class="date-badge">7 / 12 (日)</span>
-      </div>
-      <div class="venue">高雄巨蛋</div>
+      <div class="dates"></div>
+      <div class="venue"></div>
       <a href="#fan-support" class="hero-cta">查看應援資訊 ↓</a>
     </div>
   </header>
@@ -38,11 +35,7 @@
   <nav class="nav">
     <div class="nav-dropdown-wrap">
       <a href="#fan-support" class="nav-link-main">應援資訊 <span class="nav-chevron">▾</span></a>
-      <div class="nav-drop">
-        <a class="nav-drop-item" data-section="section-both">🗓️ 雙日應援區</a>
-        <a class="nav-drop-item" data-section="section-day1">📅 7/13 應援區</a>
-        <a class="nav-drop-item" data-section="section-day2">📅 7/12 應援區</a>
-      </div>
+      <div class="nav-drop"><!-- items populated by JS per active event --></div>
     </div>
     <a href="#landmarks">周邊地標</a>
     <a href="#transport">交通指南</a>
@@ -54,17 +47,24 @@
   <!-- Fan Support Posts -->
   <section class="section" id="fan-support">
     <div class="container">
-      <h2 class="section-title">📣 高雄場應援資訊</h2>
+      <h2 class="section-title">📣 應援資訊</h2>
+      <div class="event-tabs" id="event-tabs">
+        <button class="event-tab" data-event="taipei">
+          <span class="event-tab-name">台北場</span>
+          <span class="event-tab-date">8/15 (五) · 台北大巨蛋</span>
+          <span class="event-status active">🔴 進行中</span>
+        </button>
+        <button class="event-tab" data-event="kaohsiung">
+          <span class="event-tab-name">高雄場</span>
+          <span class="event-tab-date">7/13-12 · 高雄巨蛋</span>
+          <span class="event-status ended">已結束</span>
+        </button>
+      </div>
       <div class="post-search-wrap">
         <input type="text" id="post-search" class="post-search" placeholder="🔍 搜尋應援物、成員、地點、主辦人…" autocomplete="off">
         <span id="post-search-count" class="post-search-count"></span>
       </div>
-      <div class="day-filter" id="day-filter">
-        <button class="day-btn active" data-day="all">全部</button>
-        <button class="day-btn" data-day="both">🗓️ 雙日</button>
-        <button class="day-btn" data-day="day1">📅 7/13（一）</button>
-        <button class="day-btn" data-day="day2">📅 7/12（日）</button>
-      </div>
+      <div class="day-filter" id="day-filter"><!-- populated by JS per active event --></div>
       <div class="posts-grid" id="posts-grid">
         <div class="loading">載入中⋯</div>
       </div>

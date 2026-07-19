@@ -18,7 +18,7 @@ PENDING_PATH = "data/pending.json"
 POSTS_PATH   = "data/posts.json"
 
 EDITABLE = {"event_name","text","location","support_items","quantity","conditions",
-            "distribution_time","url","urls","day","venue_type"}
+            "distribution_time","url","urls","day","venue_type","event"}
 
 
 def _gh_get(path):

@@ -77,6 +77,7 @@ class Handler(SimpleHTTPRequestHandler):
             "urls": urls,
             "date": datetime.now(timezone.utc).strftime("%Y/%m/%d"),
             "source": "community",
+            "event": data.get("event", "taipei"),
             "venue_type": data.get("venue_type", ""),
             "day": data.get("day", "both"),
             "event_name": data.get("event_name", ""),
@@ -121,7 +122,7 @@ class Handler(SimpleHTTPRequestHandler):
         target  = data.get("target", "posts")
         fields  = data.get("fields", {})
         editable = {"event_name","text","location","support_items","quantity","conditions",
-                    "distribution_time","url","urls","day","venue_type"}
+                    "distribution_time","url","urls","day","venue_type","event"}
         fields = {k: v for k, v in fields.items() if k in editable}
 
         if target == "pending":
