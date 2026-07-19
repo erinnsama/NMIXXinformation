@@ -198,7 +198,100 @@
       </div><!-- /event-content kaohsiung -->
 
       <div class="event-content" data-event="taipei">
-        <div class="event-placeholder">🚧 台北場（8/15 台北大巨蛋）交通指南、周邊地標、路線地圖等尚未整理，敬請期待～</div>
+        <div class="transport-header">
+          <div class="route-display">
+            <span class="route-node">台北車站</span>
+            <span class="route-arrow">→</span>
+            <span class="route-node">台北大巨蛋</span>
+          </div>
+          <a href="https://www.google.com/maps/dir/台北車站/台北大巨蛋" target="_blank" class="maps-btn">
+            在 Google Maps 開啟路線 ↗
+          </a>
+        </div>
+
+        <div class="transport-sub-label">交通方式</div>
+        <div class="transport-tips">
+          <div class="transport-card">
+            <div class="transport-card-head">🚇 捷運</div>
+            <div class="transport-item">
+              <div class="transport-route">板南線（藍線）→ 國父紀念館站</div>
+              <div class="transport-detail">往「南港展覽館」方向，於「國父紀念館站」下車，5 號出口出站，車程加步行約 13–15 分鐘</div>
+            </div>
+          </div>
+          <div class="transport-card bus">
+            <div class="transport-card-head">🚌 公車</div>
+            <div class="transport-item">
+              <div class="transport-route">台北車站（忠孝）→ 國父紀念館 / 觀光局</div>
+              <div class="transport-detail">建議：忠孝幹線、299、212（含直行與區間車）、600 號公車，車程約 20–30 分鐘（視交通狀況）</div>
+            </div>
+          </div>
+          <div class="transport-card car">
+            <div class="transport-card-head">🚗 開車</div>
+            <div class="transport-item">
+              <div class="transport-detail">車上有導航即可，附近停車場請見下方</div>
+            </div>
+          </div>
+          <div class="transport-card park">
+            <div class="transport-card-head">🅿️ 停車</div>
+            <div class="transport-item">
+              <div class="transport-detail">
+                <a href="https://maps.app.goo.gl/4MW6Brx8UpZB1GdXA" target="_blank" rel="noopener">CITY PARKING 城市車旅（臺北大巨蛋園區站）↗</a><br>
+                <a href="https://maps.app.goo.gl/q6hsd4nw6Qb9gN3u8" target="_blank" rel="noopener">大巨蛋停車場入口 ↗</a><br>
+                <a href="https://maps.app.goo.gl/bQoCP1AwoompprY89" target="_blank" rel="noopener">大巨蛋秀泰停車場 ↗</a><br>
+                <a href="https://maps.app.goo.gl/UzRnc6JFk3ENDU3S7" target="_blank" rel="noopener">台灣聯通停車場・延吉好室場 ↗</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="transport-sub-label">路線地圖</div>
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?saddr=台北車站&daddr=台北大巨蛋&output=embed&hl=zh-TW"
+            class="google-map"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <div class="transport-sub-label" data-anchor="landmarks">周邊地標</div>
+        <div class="landmark-grid">
+          <a class="landmark-card" href="https://maps.app.goo.gl/3uyQjmr75Wqaj5B26" target="_blank" rel="noopener">
+            <div class="landmark-icon">🎵</div>
+            <div class="landmark-name">台北大巨蛋</div>
+            <div class="landmark-desc">演唱會場地</div>
+            <div class="landmark-nav">Google Maps 導航 ↗</div>
+          </a>
+          <a class="landmark-card" href="https://maps.app.goo.gl/5be9Ebw4PoWJ4mHBA" target="_blank" rel="noopener">
+            <div class="landmark-icon">🌙</div>
+            <div class="landmark-name">臨江街觀光夜市</div>
+            <div class="landmark-desc">在地夜市</div>
+            <div class="landmark-nav">Google Maps 導航 ↗</div>
+          </a>
+          <a class="landmark-card" href="https://maps.app.goo.gl/4qMjh8FisGYWo4MPA" target="_blank" rel="noopener">
+            <div class="landmark-icon">🍜</div>
+            <div class="landmark-name">遼寧街夜市</div>
+            <div class="landmark-desc">在地夜市</div>
+            <div class="landmark-nav">Google Maps 導航 ↗</div>
+          </a>
+        </div>
+
+        <div class="transport-sub-label">場館地圖</div>
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q=台北大巨蛋&z=17&output=embed&hl=zh-TW"
+            class="google-map"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <div class="transport-sub-label">座位區視野參考</div>
+        <div class="seating-wrap">
+          <img src="assets/台北大巨蛋座位.jpg" alt="台北大巨蛋座位區視野圖" class="seating-img">
+        </div>
       </div>
     </div>
   </section>
@@ -268,8 +361,8 @@
   <!-- Concert Notes -->
   <section class="section section-alt" id="notes">
     <div class="container">
-      <h2 class="section-title">📋 演唱會注意事項</h2>
       <div class="event-content" data-event="kaohsiung">
+      <h2 class="section-title">📋 演唱會注意事項</h2>
       <div class="notes-list">
         <div class="note-item">
           <span class="note-icon">🌀</span>
@@ -303,7 +396,37 @@
       </div><!-- /event-content kaohsiung -->
 
       <div class="event-content" data-event="taipei">
-        <div class="event-placeholder">🚧 台北場注意事項尚未整理，敬請期待～</div>
+        <h2 class="section-title">📋 賽後表演注意事項</h2>
+        <p class="section-desc" style="margin-bottom: 20px;">
+          詳細內容可以看這篇 →
+          <a href="https://www.threads.com/share/JTwldqZec/" target="_blank" rel="noopener" style="color: var(--purple); font-weight: 600;">Threads 貼文 ↗</a>
+        </p>
+        <div class="notes-list">
+          <div class="note-item">
+            <span class="note-icon">🎟️</span>
+            <div>
+              <strong>購票與入場準備</strong>
+              <p><strong>線上買票：</strong>請直接至味全龍官方售票網進行線上購票。</p>
+              <p><strong>過安檢：</strong>進場時需配合包包安全檢查，建議大家多抓一點提前到達的時間，避免因排隊耽誤入場。</p>
+            </div>
+          </div>
+          <div class="note-item">
+            <span class="note-icon">⚾</span>
+            <div>
+              <strong>比賽進行中的看球守則</strong>
+              <p>1. 棒球賽事期間，請跟著味全龍應援團長的節奏與帶領，一起為場上奮戰的球員們大聲吶喊！</p>
+              <p>2. <strong>手燈絕對禁用：</strong>雖然可以攜帶手燈進場，但在比賽過程中嚴禁開啟！</p>
+              <p>3. 任何細小的光線都極有可能干擾球員視線、影響比賽安全，請務必配合。</p>
+            </div>
+          </div>
+          <div class="note-item">
+            <span class="note-icon">🪄</span>
+            <div>
+              <strong>賽後表演：NMIXX 專屬時間</strong>
+              <p>等到賽後表演、NMIXX 正式登台時，就可以立刻拿出手燈點亮，盡情為女孩們大聲喊出應援口號，給予最大的支持！</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
